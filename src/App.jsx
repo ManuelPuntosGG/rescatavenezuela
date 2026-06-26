@@ -9,11 +9,11 @@ export default function App() {
   const [rescates, setRescates] = useState([]);
   const [acopios, setAcopios] = useState([]);
   const [coordenadaSeleccionada, setCoordenadaSeleccionada] = useState(null);
-  const [pestanaActiva, setPestanaActiva] = useState('rescate'); 
+  const [formActivo, setFormActivo] = useState(null); // <-- 'rescate', 'acopio' o null para controlar el Modal
   const [gpsUsuario, setGpsUsuario] = useState(null);
-  const [soloCriticos, setSoloCriticos] = useState(false); // <-- Nuevo Filtro Táctico
+  const [soloCriticos, setSoloCriticos] = useState(false); 
 
-  // Ref para evitar que las suscripciones en tiempo real se reconecten innecesariamente al cambiar el GPS
+  // Ref para evitar reconexiones innecesarias de tiempo real
   const gpsUsuarioRef = useRef(gpsUsuario);
   useEffect(() => {
     gpsUsuarioRef.current = gpsUsuario;
@@ -57,7 +57,6 @@ export default function App() {
   useEffect(() => {
     cargarDatos();
 
-    // Las suscripciones ahora se inicializan una única vez al montar la app
     const canalRescates = supabase.channel('cambios-rescates')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'reportes_rescate' }, () => cargarDatos())
       .subscribe();
@@ -84,7 +83,6 @@ export default function App() {
     }, { enableHighAccuracy: true });
   };
 
-  // Filtrado lógico de rescates prioritarios
   const rescatesFiltrados = soloCriticos 
     ? rescates.filter(item => item.sospecha_supervivientes) 
     : rescates;
@@ -92,9 +90,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans antialiased text-slate-900">
       
-      {/* Navbar con gradiente e indicador de transmisión en vivo */}
-      <header className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-4 shadow-lg border-b border-slate-800">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+      {/* Header Principal con Acciones Rápidas */}
+      <header className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-4 shadow-lg border-b border-slate-800 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
             <div className="flex items-center gap-2">
               <span className="flex h-2.5 w-2.5 relative">
@@ -105,80 +103,73 @@ export default function App() {
             </div>
             <p className="text-xs text-slate-400 mt-0.5">Monitoreo Civil de Contingencias e Insumos Logísticos</p>
           </div>
-          <button 
-            onClick={geolocalizarUsuario} 
-            className={`text-xs font-bold py-2.5 px-4 rounded-lg shadow-md transition-all flex items-center gap-2 border ${
-              gpsUsuario 
-                ? "bg-blue-500/10 text-blue-400 border-blue-500/30" 
-                : "bg-blue-600 hover:bg-blue-700 text-white border-transparent"
-            }`}
-          >
-            {gpsUsuario ? "📍 GPS Activo" : "📍 Compartir mi GPS Actual"}
-          </button>
-        </div>
-      </header>
 
-      {/* Contenido Principal */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-5">
-        
-        {/* Columna 1: Formularios */}
-        <div className="space-y-4 flex flex-col">
-          <BuscadorDireccion onDireccionEncontrada={(coords) => setCoordenadaSeleccionada(coords)} />
-
-          <div className="bg-slate-200/60 p-1 rounded-xl flex border border-slate-300/60 gap-1 shadow-inner">
+          {/* Botones de Acción de Registro y GPS */}
+          <div className="flex flex-wrap items-center gap-2.5">
             <button 
-              onClick={() => setPestanaActiva('rescate')} 
-              className={`flex-1 text-xs font-black py-2.5 px-3 rounded-lg transition-all ${pestanaActiva === 'rescate' ? 'bg-white text-red-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+              onClick={() => setFormActivo('rescate')}
+              className="text-xs font-black bg-red-600 hover:bg-red-700 text-white py-2.5 px-4 rounded-lg shadow-md transition-all flex items-center gap-2"
             >
               🚨 Reportar Rescate
             </button>
             <button 
-              onClick={() => setPestanaActiva('acopio')} 
-              className={`flex-1 text-xs font-black py-2.5 px-3 rounded-lg transition-all ${pestanaActiva === 'acopio' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+              onClick={() => setFormActivo('acopio')}
+              className="text-xs font-black bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 px-4 rounded-lg shadow-md transition-all flex items-center gap-2"
             >
               📦 Nuevo Acopio
             </button>
+            <button 
+              onClick={geolocalizarUsuario} 
+              className={`text-xs font-bold py-2.5 px-4 rounded-lg shadow-md transition-all flex items-center gap-2 border ${
+                gpsUsuario 
+                  ? "bg-blue-500/10 text-blue-400 border-blue-500/30" 
+                  : "bg-blue-600 hover:bg-blue-700 text-white border-transparent"
+              }`}
+            >
+              {gpsUsuario ? "📍 GPS Activo" : "📍 Compartir mi GPS"}
+            </button>
           </div>
+        </div>
+      </header>
 
-          {coordenadaSeleccionada ? (
-            <div className="bg-blue-50 border border-blue-200 text-blue-700 text-[11px] py-2 px-3 rounded-lg text-center font-medium shadow-sm flex items-center justify-center gap-1.5">
-              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
-              Marcador fijado: {coordenadaSeleccionada.lat.toFixed(5)}, {coordenadaSeleccionada.lng.toFixed(5)}
+      {/* Contenido Principal enfocado en Consulta (Grid de 2 Columnas) */}
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-5">
+        
+        {/* Columna de Mapa e Indicador de Ubicación (Toma 2/3 del espacio) */}
+        <div className="lg:col-span-2 flex flex-col gap-3">
+          
+          {/* Buscador y estado de coordenada integrados sobre el mapa */}
+          <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+            <div className="flex-1">
+              <BuscadorDireccion onDireccionEncontrada={(coords) => setCoordenadaSeleccionada(coords)} />
             </div>
-          ) : (
-            <div className="bg-amber-50 border border-amber-200/70 text-amber-900 text-[11px] py-2.5 px-3 rounded-lg text-center font-medium shadow-sm animate-pulse">
-              ⚠️ Haz clic en el mapa, introduce una calle arriba o activa tu GPS para desbloquear el formulario de envío.
-            </div>
-          )}
-
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-1 flex-1">
-            {pestanaActiva === 'rescate' ? (
-              <FormularioRescate coordenadas={coordenadaSeleccionada} onAgregarExitoso={() => { setCoordenadaSeleccionada(null); cargarDatos(); }} />
-            ) : (
-              <FormularioAcopio coordenadas={coordenadaSeleccionada} onAgregarExitoso={() => { setCoordenadaSeleccionada(null); cargarDatos(); }} />
+            {coordenadaSeleccionada && (
+              <div className="bg-blue-50 border border-blue-200 text-blue-700 text-[11px] py-2.5 px-4 rounded-lg font-medium shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+                Fijado: {coordenadaSeleccionada.lat.toFixed(4)}, {coordenadaSeleccionada.lng.toFixed(4)}
+              </div>
             )}
           </div>
+
+          <div className="bg-white p-2 rounded-xl shadow-sm border border-slate-200 relative h-[500px] lg:h-full flex flex-col overflow-hidden">
+            <div className="absolute top-4 right-4 z-[40] bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-sm border border-slate-200 text-[11px] space-y-1.5 font-bold text-slate-700">
+              <div className="flex items-center"><span className="w-2.5 h-2.5 bg-red-500 rounded-full mr-2 shadow-sm"></span> Solicitud Rescate</div>
+              <div className="flex items-center"><span className="w-2.5 h-2.5 bg-emerald-500 rounded-full mr-2 shadow-sm"></span> Centro de Acopio</div>
+              <div className="flex items-center"><span className="w-2.5 h-2.5 bg-blue-500 rounded-full mr-2 shadow-sm"></span> Tu Selección</div>
+            </div>
+            <div className="flex-1 w-full h-full rounded-lg overflow-hidden">
+              <MapaEmergencia 
+                rescates={rescates} 
+                acopios={acopios}
+                coordenadaSeleccionada={coordenadaSeleccionada} 
+                onMapClick={(latlng) => setCoordenadaSeleccionada(latlng)} 
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Columna 2: Mapa */}
-        <div className="bg-white p-2 rounded-xl shadow-sm border border-slate-200 relative h-[450px] lg:h-auto flex flex-col overflow-hidden">
-          <div className="absolute top-4 right-4 z-[999] bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-sm border border-slate-200 text-[11px] space-y-1.5 font-bold text-slate-700">
-            <div className="flex items-center"><span className="w-2.5 h-2.5 bg-red-500 rounded-full mr-2 shadow-sm"></span> Solicitud Rescate</div>
-            <div className="flex items-center"><span className="w-2.5 h-2.5 bg-emerald-500 rounded-full mr-2 shadow-sm"></span> Centro de Acopio</div>
-            <div className="flex items-center"><span className="w-2.5 h-2.5 bg-blue-500 rounded-full mr-2 shadow-sm"></span> Tu Selección</div>
-          </div>
-          <div className="flex-1 w-full h-full rounded-lg overflow-hidden">
-            <MapaEmergencia 
-              rescates={rescates} 
-              acopios={acopios}
-              coordenadaSeleccionada={coordenadaSeleccionada} 
-              onMapClick={(latlng) => setCoordenadaSeleccionada(latlng)} 
-            />
-          </div>
-        </div>
-
-        {/* Columna 3: Listados Dinámicos */}
-        <div className="space-y-4 flex flex-col h-[600px] lg:h-auto overflow-hidden">
+        {/* Columna de Listados Dinámicos (Toma 1/3 del espacio) */}
+        <div className="lg:col-span-1 space-y-4 flex flex-col h-[600px] lg:h-auto overflow-hidden">
           
           {/* Tarjeta de Rescates */}
           <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
@@ -187,8 +178,6 @@ export default function App() {
                 🚨 RESCATES PRIORITARIOS
                 <span className="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-bold">{rescatesFiltrados.length}</span>
               </h3>
-              
-              {/* Toggle de filtrado rápido */}
               <label className="inline-flex items-center cursor-pointer text-[11px] font-semibold text-slate-600">
                 <input 
                   type="checkbox" 
@@ -202,7 +191,7 @@ export default function App() {
 
             <div className="overflow-y-auto space-y-2.5 flex-1 pr-1 custom-scrollbar">
               {rescatesFiltrados.length === 0 ? (
-                <div className="text-center py-8 text-slate-400 text-xs">No hay operaciones que coincidan con el filtro.</div>
+                <div className="text-center py-8 text-slate-400 text-xs">No hay operaciones críticas.</div>
               ) : (
                 rescatesFiltrados.map((item) => (
                   <div key={item.id} className="p-3 bg-slate-50/80 hover:bg-slate-50 rounded-lg border border-slate-200/60 text-xs transition-all hover:translate-x-0.5 shadow-sm">
@@ -245,7 +234,7 @@ export default function App() {
             </h3>
             <div className="overflow-y-auto space-y-2.5 flex-1 pr-1 custom-scrollbar">
               {acopios.length === 0 ? (
-                <div className="text-center py-8 text-slate-400 text-xs">No se han registrado centros de acopio activos.</div>
+                <div className="text-center py-8 text-slate-400 text-xs">No hay centros activos registrados.</div>
               ) : (
                 acopios.map((item) => (
                   <div key={item.id} className="p-3 bg-slate-50/80 hover:bg-slate-50 rounded-lg border border-slate-200/60 text-xs transition-all hover:translate-x-0.5 shadow-sm">
@@ -280,9 +269,56 @@ export default function App() {
               )}
             </div>
           </div>
-
         </div>
       </main>
+
+      {/* MODAL EMERGENTE: Se activa únicamente al presionar los botones del header */}
+      {formActivo && (
+        <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-[100] animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-5 max-w-md w-full max-h-[90vh] overflow-y-auto relative">
+            
+            {/* Botón Cerrar */}
+            <button 
+              onClick={() => setFormActivo(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold transition-all"
+            >
+              ✕
+            </button>
+
+            <h2 className="text-xs font-black tracking-wider text-slate-400 mb-4 uppercase">
+              {formActivo === 'rescate' ? '🚨 Registrar Solicitud de Rescate' : '📦 Registrar Punto de Acopio'}
+            </h2>
+
+            {/* Alerta de geolocalización contextual dentro del modal */}
+            {coordenadaSeleccionada ? (
+              <div className="bg-blue-50 border border-blue-200 text-blue-700 text-[11px] py-2 px-3 rounded-lg text-center font-semibold mb-4 flex items-center justify-center gap-1.5">
+                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+                Coordenadas vinculadas al formulario con éxito.
+              </div>
+            ) : (
+              <div className="bg-amber-50 border border-amber-200 text-amber-900 text-[11px] py-2.5 px-3 rounded-lg text-center font-medium mb-4">
+                ⚠️ <strong>Nota:</strong> No has fijado un punto. Puedes cerrar este cuadro, marcar el mapa o usar el buscador de calles, y luego volver a abrir este registro.
+              </div>
+            )}
+
+            {/* Renderizado condicional del formulario seleccionado */}
+            <div className="mt-2">
+              {formActivo === 'rescate' ? (
+                <FormularioRescate 
+                  coordenadas={coordenadaSeleccionada} 
+                  onAgregarExitoso={() => { setCoordenadaSeleccionada(null); setFormActivo(null); cargarDatos(); }} 
+                />
+              ) : (
+                <FormularioAcopio 
+                  coordinates={coordenadaSeleccionada} // Asegurar concordancia con la prop de tu componente
+                  coordenadas={coordenadaSeleccionada} 
+                  onAgregarExitoso={() => { setCoordenadaSeleccionada(null); setFormActivo(null); cargarDatos(); }} 
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
