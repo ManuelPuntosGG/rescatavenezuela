@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Papa from 'papaparse'; // Importante: instalado vía npm
 import { supabase } from './supabaseClient';
 import MapaEmergencia from './components/MapaEmergencia';
 import FormularioRescate from './components/FormularioRescate';
 import FormularioAcopio from './components/FormularioAcopio';
 import BuscadorDireccion from './components/BuscadorDireccion';
 
-// Importación del set de datos consolidado con más entradas
-import { PACIENTES_HOSPITALES } from './pacientesData';
-
-// Optimizando rendimiento: Definida afuera para evitar recreación en cada render
+// Optimizando rendimiento
 const normalizarTexto = (str) => {
   if (!str) return "";
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -22,17 +20,38 @@ export default function App() {
   const [gpsUsuario, setGpsUsuario] = useState(null);
   const [soloCriticos, setSoloCriticos] = useState(false); 
 
-  // Estados específicos para el Módulo de Consulta Hospitalaria
-  const [pacientes] = useState(PACIENTES_HOSPITALES); // Carga inicial estática
+  // ESTADO DINÁMICO PARA PACIENTES (ahora vacío al inicio)
+  const [pacientes, setPacientes] = useState([]); 
   const [busquedaPaciente, setBusquedaPaciente] = useState('');
   const [filtroHospital, setFiltroHospital] = useState('');
 
-  // Control de expansión de tarjetas independientes para no abrumar la vista
   const [rescateExpandido, setRescateExpandido] = useState(null);
   const [acopioExpandido, setAcopioExpandido] = useState(null);
-
-  // Control de la sección activa
   const [seccionActiva, setSeccionActiva] = useState('mapa'); 
+
+  // CARGA DE CSV
+  useEffect(() => {
+    // Asegúrate de que el archivo esté en la carpeta /public
+    fetch('/Registro_Maestro_Pacientes_Sismo_2026.csv')
+      .then(response => response.text())
+      .then(csvText => {
+        Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            // Mapeamos los encabezados del CSV a las llaves que tu app usa
+            const datosFormateados = results.data.map((item, index) => ({
+              id: index,
+              nombre: item['Apellidos y Nombres'] || "Sin Nombre",
+              hospital: item['Hospital'] || "Sin Hospital",
+              edad: item['Edad'] || "—"
+            }));
+            setPacientes(datosFormateados);
+          }
+        });
+      })
+      .catch(err => console.error("Error cargando CSV:", err));
+  }, []);
 
   const gpsUsuarioRef = useRef(gpsUsuario);
   useEffect(() => {
@@ -44,9 +63,7 @@ export default function App() {
     const R = 6371; 
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
-    const a = 
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; 
   };
@@ -76,7 +93,6 @@ export default function App() {
 
   useEffect(() => {
     cargarDatos();
-
     const canalRescates = supabase.channel('cambios-rescates')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'reportes_rescate' }, () => cargarDatos())
       .subscribe();
@@ -99,20 +115,15 @@ export default function App() {
       setGpsUsuario(miUbicacion);
       cargarDatos(miUbicacion); 
     }, () => {
-      alert("No se pudo acceder a tu GPS. Marcando manualmente no se calcularán distancias automáticas.");
+      alert("No se pudo acceder a tu GPS.");
     }, { enableHighAccuracy: true });
   };
 
-  const rescatesFiltrados = soloCriticos 
-    ? rescates.filter(item => item.sospecha_supervivientes) 
-    : rescates;
+  const rescatesFiltrados = soloCriticos ? rescates.filter(item => item.sospecha_supervivientes) : rescates;
 
-  // Lógica de filtrado protegida contra valores nulos o indefinidos
   const pacientesFiltrados = pacientes.filter(p => {
-    const nombrePaciente = p.nombre || "";
-    const hospitalPaciente = p.hospital || "";
-    const coincideBusqueda = normalizarTexto(nombrePaciente).includes(normalizarTexto(busquedaPaciente));
-    const coincideHospital = filtroHospital === '' || hospitalPaciente === filtroHospital;
+    const coincideBusqueda = normalizarTexto(p.nombre).includes(normalizarTexto(busquedaPaciente));
+    const coincideHospital = filtroHospital === '' || p.hospital === filtroHospital;
     return coincideBusqueda && coincideHospital;
   });
 
