@@ -1,4 +1,4 @@
-export const pacientesData = [
+export const PACIENTES_HOSPITALES = [
   {
     id: 1,
     hospital: "Hospital Universitario de Caracas",
