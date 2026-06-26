@@ -32,7 +32,7 @@ export default function App() {
   // CARGA DE CSV
   useEffect(() => {
     // Asegúrate de que el archivo esté en la carpeta /public
-    fetch('/Registro_Maestro_Pacientes_Sismo_2026.csv')
+    fetch('/pacientes.csv')
     .then(response => response.text())
     .then(csvText => {
       Papa.parse(csvText, {
