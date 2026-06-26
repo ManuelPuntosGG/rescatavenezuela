@@ -1,30 +1,46 @@
+/* --- COMPONENTE CONTADOR / BOTÓN PRINCIPAL --- */
 .counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
   color: var(--accent);
   background: var(--accent-bg);
   border: 2px solid transparent;
-  transition: border-color 0.3s;
+  cursor: pointer;
+  
+  /* Transición ultra suave para múltiples propiedades */
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 
   &:hover {
     border-color: var(--accent-border);
+    transform: translateY(-1px); /* Sutil elevación técnica */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
+
+  &:active {
+    transform: translateY(1px); /* Efecto de compresión al hacer clic */
+  }
+
   &:focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 2px;
+    outline-offset: 3px;
   }
 }
 
+/* --- SECCIÓN HERO (ANIMACIÓN ISOMÉTRICA 3D FLOTANTE) --- */
 .hero {
   position: relative;
+  perspective: 2000px; /* Movido a la raíz para mejor renderizado 3D */
 
   .base,
   .framework,
   .vite {
     inset-inline: 0;
     margin: 0 auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15)); /* Sombras realistas para los logos */
   }
 
   .base {
@@ -39,54 +55,74 @@
   }
 
   .framework {
-    z-index: 1;
+    z-index: 2;
     top: 34px;
     height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
+    transform: rotateZ(300deg) rotateX(44deg) rotateY(39deg) scale(1.4);
+    /* Animación de levitación suave */
+    animation: flotarFramework 4s ease-in-out infinite alternate;
   }
 
   .vite {
-    z-index: 0;
+    z-index: 1;
     top: 107px;
     height: 26px;
     width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
+    transform: rotateZ(300deg) rotateX(40deg) rotateY(39deg) scale(0.8);
+    /* Animación desfasada para dar sensación de capas independientes */
+    animation: flotarVite 4s ease-in-out infinite alternate;
+    animation-delay: -2s; 
   }
 }
 
+/* --- ANIMACIONES DE FLOTADO TRIDIMENSIONAL --- */
+@keyframes flotarFramework {
+  0% { transform: rotateZ(300deg) rotateX(44deg) rotateY(39deg) scale(1.4) translateY(0px); }
+  100% { transform: rotateZ(300deg) rotateX(44deg) rotateY(39deg) scale(1.4) translateY(-8px); }
+}
+
+@keyframes flotarVite {
+  0% { transform: rotateZ(300deg) rotateX(40deg) rotateY(39deg) scale(0.8) translateY(0px); }
+  100% { transform: rotateZ(300deg) rotateX(40deg) rotateY(39deg) scale(0.8) translateY(-5px); }
+}
+
+/* --- CONTENEDOR CENTRAL --- */
 #center {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 28px;
   place-content: center;
   place-items: center;
   flex-grow: 1;
 
   @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
+    padding: 40px 24px 32px;
+    gap: 20px;
   }
 }
 
+/* --- SECCIÓN DE PASOS SIGUIENTES / ENLACES --- */
 #next-steps {
   display: flex;
   border-top: 1px solid var(--border);
   text-align: left;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.01));
 
   & > div {
     flex: 1 1 0;
-    padding: 32px;
+    padding: 36px;
+    transition: background 0.3s ease;
+
     @media (max-width: 1024px) {
-      padding: 24px 20px;
+      padding: 28px 24px;
     }
   }
 
   .icon {
     margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
+    opacity: 0.9;
   }
 
   @media (max-width: 1024px) {
@@ -104,11 +140,12 @@
   }
 }
 
+/* --- LISTADO DE BOTONES / REDES SOCIALES --- */
 #next-steps ul {
   list-style: none;
   padding: 0;
   display: flex;
-  gap: 8px;
+  gap: 10px;
   margin: 32px 0 0;
 
   .logo {
@@ -117,19 +154,29 @@
 
   a {
     color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
     background: var(--social-bg);
+    border: 1px solid rgba(0, 0, 0, 0.04);
     display: flex;
-    padding: 6px 12px;
+    padding: 8px 14px;
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    transition: box-shadow 0.3s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
     &:hover {
-      box-shadow: var(--shadow);
+      background: var(--social-bg-hover, var(--social-bg)); /* Degradado sutil opcional */
+      transform: translateY(-2px);
+      box-shadow: var(--shadow), 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-color: var(--border);
     }
+
+    &:active {
+      transform: translateY(0);
+    }
+
     .button-icon {
       height: 18px;
       width: 18px;
@@ -137,12 +184,12 @@
   }
 
   @media (max-width: 1024px) {
-    margin-top: 20px;
+    margin-top: 24px;
     flex-wrap: wrap;
     justify-content: center;
 
     li {
-      flex: 1 1 calc(50% - 8px);
+      flex: 1 1 calc(50% - 10px);
     }
 
     a {
@@ -153,6 +200,7 @@
   }
 }
 
+/* --- SEPARADORES Y DETALLES TÉCNICOS --- */
 #spacer {
   height: 88px;
   border-top: 1px solid var(--border);
@@ -169,8 +217,9 @@
   &::after {
     content: '';
     position: absolute;
-    top: -4.5px;
+    top: -5px;
     border: 5px solid transparent;
+    transition: transform 0.3s ease;
   }
 
   &::before {
