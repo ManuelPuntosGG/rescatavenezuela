@@ -3,18 +3,18 @@ import { supabase } from './supabaseClient';
 import MapaEmergencia from './components/MapaEmergencia';
 import FormularioRescate from './components/FormularioRescate';
 import FormularioAcopio from './components/FormularioAcopio';
+import BuscadorDireccion from './components/BuscadorDireccion'; // <-- Nueva Importación
 
 export default function App() {
   const [rescates, setRescates] = useState([]);
   const [acopios, setAcopios] = useState([]);
   const [coordenadaSeleccionada, setCoordenadaSeleccionada] = useState(null);
-  const [pestanaActiva, setPestanaActiva] = useState('rescate'); // 'rescate' o 'acopio'
-  const [gpsUsuario, setGpsUsuario] = useState(null); // Guarda la ubicación real del usuario
+  const [pestanaActiva, setPestanaActiva] = useState('rescate'); 
+  const [gpsUsuario, setGpsUsuario] = useState(null); 
 
-  // Función matemática de Haversine para calcular distancia en Kilómetros
   const calcularDistancia = (lat1, lon1, lat2, lon2) => {
     if (!lat1 || !lon1 || !lat2 || !lon2) return null;
-    const R = 6371; // Radio de la Tierra en km
+    const R = 6371; 
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
     const a = 
@@ -98,8 +98,12 @@ export default function App() {
       {/* Contenido Principal */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
         
-        {/* Columna 1: Formularios */}
+        {/* Columna 1: Formularios e Inputs */}
         <div className="space-y-4">
+          
+          {/* NUEVO COMPONENTE: Buscador de Direcciones por Texto */}
+          <BuscadorDireccion onDireccionEncontrada={(coords) => setCoordenadaSeleccionada(coords)} />
+
           <div className="bg-white rounded-lg shadow p-2 flex justify-around border">
             <button 
               onClick={() => setPestanaActiva('rescate')} 
@@ -121,7 +125,7 @@ export default function App() {
             </div>
           ) : (
             <div className="bg-amber-50 border border-amber-200 text-amber-800 text-xs p-2 rounded text-center font-bold animate-pulse">
-              ⚠️ Haz clic en cualquier punto del mapa o usa tu GPS para habilitar el formulario.
+              ⚠️ Haz clic en cualquier punto del mapa, busca una dirección arriba o usa tu GPS para habilitar el formulario.
             </div>
           )}
 
