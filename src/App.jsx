@@ -9,11 +9,17 @@ export default function App() {
   const [rescates, setRescates] = useState([]);
   const [acopios, setAcopios] = useState([]);
   const [coordenadaSeleccionada, setCoordenadaSeleccionada] = useState(null);
-  const [formActivo, setFormActivo] = useState(null); // <-- 'rescate', 'acopio' o null para controlar el Modal
+  const [formActivo, setFormActivo] = useState(null); 
   const [gpsUsuario, setGpsUsuario] = useState(null);
   const [soloCriticos, setSoloCriticos] = useState(false); 
 
-  // Ref para evitar reconexiones innecesarias de tiempo real
+  // Control de expansión de tarjetas independientes para no abrumar la vista
+  const [rescateExpandido, setRescateExpandido] = useState(null);
+  const [acopioExpandido, setAcopioExpandido] = useState(null);
+
+  // Control de la sección activa (Listo para 'mapa' u 'hospitales' en el futuro)
+  const [seccionActiva, setSeccionActiva] = useState('mapa'); 
+
   const gpsUsuarioRef = useRef(gpsUsuario);
   useEffect(() => {
     gpsUsuarioRef.current = gpsUsuario;
@@ -87,11 +93,14 @@ export default function App() {
     ? rescates.filter(item => item.sospecha_supervivientes) 
     : rescates;
 
+  // Conteos para el resumen rápido (Card de KPIs)
+  const totalCriticos = rescates.filter(item => item.sospecha_supervivientes).length;
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans antialiased text-slate-900">
       
-      {/* Header Principal con Acciones Rápidas */}
-      <header className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-4 shadow-lg border-b border-slate-800 sticky top-0 z-50">
+      {/* Header Principal */}
+      <header className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-4 shadow-md border-b border-slate-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
             <div className="flex items-center gap-2">
@@ -105,215 +114,309 @@ export default function App() {
           </div>
 
           {/* Botones de Acción de Registro y GPS */}
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex flex-wrap items-center justify-center gap-2">
             <button 
               onClick={() => setFormActivo('rescate')}
-              className="text-xs font-black bg-red-600 hover:bg-red-700 text-white py-2.5 px-4 rounded-lg shadow-md transition-all flex items-center gap-2"
+              className="text-xs font-black bg-red-600 hover:bg-red-700 text-white py-2 px-3.5 rounded-lg shadow transition-all flex items-center gap-1.5"
             >
               🚨 Reportar Rescate
             </button>
             <button 
               onClick={() => setFormActivo('acopio')}
-              className="text-xs font-black bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 px-4 rounded-lg shadow-md transition-all flex items-center gap-2"
+              className="text-xs font-black bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3.5 rounded-lg shadow transition-all flex items-center gap-1.5"
             >
-              📦 Nuevo Acopio
+              📦 Registrar Acopio
             </button>
             <button 
               onClick={geolocalizarUsuario} 
-              className={`text-xs font-bold py-2.5 px-4 rounded-lg shadow-md transition-all flex items-center gap-2 border ${
+              className={`text-xs font-bold py-2 px-3.5 rounded-lg shadow transition-all flex items-center gap-1.5 border ${
                 gpsUsuario 
                   ? "bg-blue-500/10 text-blue-400 border-blue-500/30" 
                   : "bg-blue-600 hover:bg-blue-700 text-white border-transparent"
               }`}
             >
-              {gpsUsuario ? "📍 GPS Activo" : "📍 Compartir mi GPS"}
+              {gpsUsuario ? "📍 GPS Activo" : "📍 Compartir GPS"}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Contenido Principal enfocado en Consulta (Grid de 2 Columnas) */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-5">
-        
-        {/* Columna de Mapa e Indicador de Ubicación (Toma 2/3 del espacio) */}
-        <div className="lg:col-span-2 flex flex-col gap-3">
-          
-          {/* Buscador y estado de coordenada integrados sobre el mapa */}
-          <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-            <div className="flex-1">
-              <BuscadorDireccion onDireccionEncontrada={(coords) => setCoordenadaSeleccionada(coords)} />
-            </div>
-            {coordenadaSeleccionada && (
-              <div className="bg-blue-50 border border-blue-200 text-blue-700 text-[11px] py-2.5 px-4 rounded-lg font-medium shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap">
-                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
-                Fijado: {coordenadaSeleccionada.lat.toFixed(4)}, {coordenadaSeleccionada.lng.toFixed(4)}
-              </div>
-            )}
+      {/* SUB-NAVBAR: Menú Limpio de Secciones (Preparado para Hospitales) */}
+      <div className="bg-white border-b border-slate-200 sticky top-[73px] z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-12">
+          <div className="flex gap-1 h-full">
+            <button 
+              onClick={() => setSeccionActiva('mapa')}
+              className={`px-4 h-full text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
+                seccionActiva === 'mapa' ? 'border-indigo-600 text-indigo-600 bg-indigo-50/30' : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              🗺️ Mapa de Emergencia
+            </button>
+            <button 
+              onClick={() => setSeccionActiva('hospitales')}
+              className={`px-4 h-full text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
+                seccionActiva === 'hospitales' ? 'border-indigo-600 text-indigo-600 bg-indigo-50/30' : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              🏥 Reportes de Hospitales 
+              <span className="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-sans font-normal">Próximamente</span>
+            </button>
           </div>
+        </div>
+      </div>
 
-          <div className="bg-white p-2 rounded-xl shadow-sm border border-slate-200 relative h-[500px] lg:h-full flex flex-col overflow-hidden">
-            <div className="absolute top-4 right-4 z-[40] bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-sm border border-slate-200 text-[11px] space-y-1.5 font-bold text-slate-700">
-              <div className="flex items-center"><span className="w-2.5 h-2.5 bg-red-500 rounded-full mr-2 shadow-sm"></span> Solicitud Rescate</div>
-              <div className="flex items-center"><span className="w-2.5 h-2.5 bg-emerald-500 rounded-full mr-2 shadow-sm"></span> Centro de Acopio</div>
-              <div className="flex items-center"><span className="w-2.5 h-2.5 bg-blue-500 rounded-full mr-2 shadow-sm"></span> Tu Selección</div>
+      {/* PANEL DE RESUMEN RÁPIDO (Métricas limpias para evitar caos visual) */}
+      <section className="bg-slate-100/80 border-b border-slate-200/60 py-3 px-4">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
+            <div className="p-2 rounded-lg bg-red-50 text-red-600 font-bold text-lg">🚨</div>
+            <div>
+              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Rescates Activos</p>
+              <p className="text-lg font-black text-slate-800 mt-1">{rescates.length}</p>
             </div>
-            <div className="flex-1 w-full h-full rounded-lg overflow-hidden">
-              <MapaEmergencia 
-                rescates={rescates} 
-                acopios={acopios}
-                coordenadaSeleccionada={coordenadaSeleccionada} 
-                onMapClick={(latlng) => setCoordenadaSeleccionada(latlng)} 
-              />
+          </div>
+          <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
+            <div className="p-2 rounded-lg bg-orange-50 text-orange-600 font-bold text-lg">⚠️</div>
+            <div>
+              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Casos Críticos</p>
+              <p className="text-lg font-black text-orange-600 mt-1">{totalCriticos}</p>
+            </div>
+          </div>
+          <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
+            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600 font-bold text-lg">📦</div>
+            <div>
+              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Centros de Acopio</p>
+              <p className="text-lg font-black text-slate-800 mt-1">{acopios.length}</p>
+            </div>
+          </div>
+          <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
+            <div className="p-2 rounded-lg bg-blue-50 text-blue-600 font-bold text-lg">👥</div>
+            <div>
+              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Búsqueda Personas</p>
+              <p className="text-xs font-bold text-slate-400 mt-1">Conectando...</p>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Columna de Listados Dinámicos (Toma 1/3 del espacio) */}
-        <div className="lg:col-span-1 space-y-4 flex flex-col h-[600px] lg:h-auto overflow-hidden">
+      {/* VISTAS CONDICIONALES */}
+      {seccionActiva === 'mapa' ? (
+        <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-5">
           
-          {/* Tarjeta de Rescates */}
-          <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
-            <div className="border-b border-slate-100 pb-3 mb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <h3 className="text-xs font-black tracking-wider text-slate-400 flex items-center gap-2">
-                🚨 RESCATES PRIORITARIOS
-                <span className="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-bold">{rescatesFiltrados.length}</span>
-              </h3>
-              <label className="inline-flex items-center cursor-pointer text-[11px] font-semibold text-slate-600">
-                <input 
-                  type="checkbox" 
-                  checked={soloCriticos} 
-                  onChange={(e) => setSoloCriticos(e.target.checked)} 
-                  className="rounded border-slate-300 text-red-600 focus:ring-red-500 mr-1.5 w-3.5 h-3.5"
-                />
-                Solo críticos
-              </label>
+          {/* Columna de Mapa (2/3) */}
+          <div className="lg:col-span-2 flex flex-col gap-3">
+            <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+              <div className="flex-1">
+                <BuscadorDireccion onDireccionEncontrada={(coords) => setCoordenadaSeleccionada(coords)} />
+              </div>
+              {coordenadaSeleccionada && (
+                <div className="bg-blue-50 border border-blue-200 text-blue-700 text-[11px] py-2 px-3.5 rounded-lg font-medium shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap">
+                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+                  Fijado: {coordenadaSeleccionada.lat.toFixed(4)}, {coordenadaSeleccionada.lng.toFixed(4)}
+                </div>
+              )}
             </div>
 
-            <div className="overflow-y-auto space-y-2.5 flex-1 pr-1 custom-scrollbar">
-              {rescatesFiltrados.length === 0 ? (
-                <div className="text-center py-8 text-slate-400 text-xs">No hay operaciones críticas.</div>
-              ) : (
-                rescatesFiltrados.map((item) => (
-                  <div key={item.id} className="p-3 bg-slate-50/80 hover:bg-slate-50 rounded-lg border border-slate-200/60 text-xs transition-all hover:translate-x-0.5 shadow-sm">
-                    <div className="flex justify-between items-start mb-1 gap-2">
-                      <span className="font-bold text-slate-800 truncate flex-1">{item.ubicacion_referencia}</span>
-                      {item.distancia !== undefined && (
-                        <span className="bg-slate-200 text-slate-700 font-mono font-bold px-1.5 py-0.5 rounded text-[10px] whitespace-nowrap">
-                          📍 a {item.distancia.toFixed(1)} km
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-slate-600 text-[11px] leading-relaxed mb-2.5">{item.detalles_emergencia}</p>
-                    <div className="flex justify-between items-end text-[10px] text-slate-500 border-t border-slate-200/50 pt-2 mt-1">
-                      <div className="flex flex-col gap-0.5">
-                        <span className="font-medium text-slate-700">📞 Contacto: {item.contacto_reportante}</span>
-                        {item.sospecha_supervivientes && (
-                          <span className="text-red-600 font-bold flex items-center gap-1 animate-pulse">⚠️ Personas atrapadas</span>
+            <div className="bg-white p-1.5 rounded-xl shadow-sm border border-slate-200 relative h-[450px] lg:h-full flex flex-col overflow-hidden">
+              <div className="flex-1 w-full h-full rounded-lg overflow-hidden">
+                <MapaEmergencia 
+                  rescates={rescates} 
+                  acopios={acopios}
+                  coordenadaSeleccionada={coordenadaSeleccionada} 
+                  onMapClick={(latlng) => setCoordenadaSeleccionada(latlng)} 
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Columna de Listados Dinámicos e Intuitivos (1/3) */}
+          <div className="lg:col-span-1 space-y-4 flex flex-col h-[600px] lg:h-auto overflow-hidden">
+            
+            {/* Lista de Rescates */}
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
+              <div className="border-b border-slate-100 pb-2 mb-2 flex items-center justify-between">
+                <h3 className="text-xs font-black tracking-wider text-slate-400 flex items-center gap-1.5">
+                  🚨 SOLICITUDES DE RESCATE
+                </h3>
+                <label className="inline-flex items-center cursor-pointer text-[10px] font-semibold text-slate-500">
+                  <input 
+                    type="checkbox" 
+                    checked={soloCriticos} 
+                    onChange={(e) => setSoloCriticos(e.target.checked)} 
+                    className="rounded border-slate-300 text-red-600 focus:ring-red-500 mr-1 w-3 h-3"
+                  />
+                  Solo críticos
+                </label>
+              </div>
+
+              <div className="overflow-y-auto space-y-2 flex-1 pr-1 custom-scrollbar">
+                {rescatesFiltrados.length === 0 ? (
+                  <div className="text-center py-8 text-slate-400 text-xs">Sin registros que mostrar.</div>
+                ) : (
+                  rescatesFiltrados.map((item) => {
+                    const estaExpandido = rescateExpandido === item.id;
+                    return (
+                      <div 
+                        key={item.id} 
+                        onClick={() => setRescateExpandido(estaExpandido ? null : item.id)}
+                        className={`p-3 rounded-lg border text-xs transition-all cursor-pointer shadow-sm ${
+                          estaExpandido ? 'bg-indigo-50/20 border-indigo-200' : 'bg-slate-50/60 hover:bg-slate-50 border-slate-200/70'
+                        }`}
+                      >
+                        <div className="flex justify-between items-start gap-2">
+                          <div className="truncate flex-1">
+                            <span className="font-bold text-slate-800 block truncate">{item.ubicacion_referencia}</span>
+                            {item.sospecha_supervivientes && !estaExpandido && (
+                              <span className="text-[10px] text-red-600 font-bold animate-pulse">⚠️ Atrapados</span>
+                            )}
+                          </div>
+                          {item.distancia !== undefined && (
+                            <span className="bg-slate-200/80 text-slate-700 font-mono font-bold px-1.5 py-0.5 rounded text-[9px] whitespace-nowrap">
+                              📍 a {item.distancia.toFixed(1)} km
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Contenido Expandible controlado */}
+                        {estaExpandido && (
+                          <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2 animate-fade-in">
+                            <p className="text-[11px] leading-relaxed"><strong className="text-slate-700">Detalles:</strong> {item.detalles_emergencia}</p>
+                            <div className="flex flex-col gap-0.5 text-[10px]">
+                              <span className="font-semibold text-slate-700">📞 Contacto: {item.contacto_reportante}</span>
+                              {item.sospecha_supervivientes && (
+                                <span className="text-red-600 font-bold">⚠️ Confirmación: Sospecha fuerte de supervivientes bajo escombros.</span>
+                              )}
+                            </div>
+                            <div className="flex justify-end pt-1">
+                              <a 
+                                href={`https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1 px-2.5 rounded flex items-center text-[10px]"
+                                onClick={(e) => e.stopPropagation()} // Evita cerrar la tarjeta al pulsar el link
+                              >
+                                🗺️ Trazar Ruta
+                              </a>
+                            </div>
+                          </div>
                         )}
                       </div>
-                      <a 
-                        href={`https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1.5 px-2.5 rounded-md flex items-center transition-all text-[10px] tracking-wide shadow-sm"
-                      >
-                        🗺️ Ruta
-                      </a>
-                    </div>
-                  </div>
-                ))
-              )}
+                    );
+                  })
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* Tarjeta de Centros de Acopio */}
-          <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
-            <h3 className="text-xs font-black tracking-wider text-slate-400 border-b border-slate-100 pb-3 mb-3 flex justify-between items-center">
-              <span>📦 LOGÍSTICA Y ACOPIOS</span>
-              <span className="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full font-bold">{acopios.length}</span>
-            </h3>
-            <div className="overflow-y-auto space-y-2.5 flex-1 pr-1 custom-scrollbar">
-              {acopios.length === 0 ? (
-                <div className="text-center py-8 text-slate-400 text-xs">No hay centros activos registrados.</div>
-              ) : (
-                acopios.map((item) => (
-                  <div key={item.id} className="p-3 bg-slate-50/80 hover:bg-slate-50 rounded-lg border border-slate-200/60 text-xs transition-all hover:translate-x-0.5 shadow-sm">
-                    <div className="flex justify-between items-start mb-1 gap-2">
-                      <span className="font-bold text-slate-800 truncate flex-1">{item.nombre_centro}</span>
-                      {item.distancia !== undefined && (
-                        <span className="bg-slate-200 text-slate-700 font-mono font-bold px-1.5 py-0.5 rounded text-[10px] whitespace-nowrap">
-                          📍 a {item.distancia.toFixed(1)} km
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-slate-600 text-[11px] mb-2.5 leading-relaxed">
-                      <strong className="text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded text-[10px] font-bold mr-1">Solicita:</strong> 
-                      {item.insumos_solicitados}
-                    </p>
-                    <div className="flex justify-between items-end text-[10px] text-slate-500 border-t border-slate-200/50 pt-2 mt-1">
-                      <div className="flex flex-col gap-0.5 text-slate-500 font-medium">
-                        <span>🕒 Horario: {item.horario || 'No especificado'}</span>
-                        <span>📞 Telf: {item.contacto_centro || 'S/C'}</span>
+            {/* Lista de Centros de Acopio */}
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
+              <h3 className="text-xs font-black tracking-wider text-slate-400 border-b border-slate-100 pb-2 mb-2">
+                📦 CENTROS DE ACOPIO LOGÍSTICOS
+              </h3>
+              <div className="overflow-y-auto space-y-2 flex-1 pr-1 custom-scrollbar">
+                {acopios.length === 0 ? (
+                  <div className="text-center py-8 text-slate-400 text-xs">Sin centros activos.</div>
+                ) : (
+                  acopios.map((item) => {
+                    const estaExpandido = acopioExpandido === item.id;
+                    return (
+                      <div 
+                        key={item.id} 
+                        onClick={() => setAcopioExpandido(estaExpandido ? null : item.id)}
+                        className={`p-3 rounded-lg border text-xs transition-all cursor-pointer shadow-sm ${
+                          estaExpandido ? 'bg-emerald-50/20 border-emerald-200' : 'bg-slate-50/60 hover:bg-slate-50 border-slate-200/70'
+                        }`}
+                      >
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="font-bold text-slate-800 truncate flex-1">{item.nombre_centro}</span>
+                          {item.distancia !== undefined && (
+                            <span className="bg-slate-200/80 text-slate-700 font-mono font-bold px-1.5 py-0.5 rounded text-[9px] whitespace-nowrap">
+                              📍 a {item.distancia.toFixed(1)} km
+                            </span>
+                          )}
+                        </div>
+                        
+                        {!estaExpandido && (
+                          <p className="text-slate-500 text-[10px] truncate mt-0.5">🔍 Clic para ver insumos solicitados y horarios</p>
+                        )}
+
+                        {/* Contenido Expandible */}
+                        {estaExpandido && (
+                          <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2 animate-fade-in">
+                            <p className="text-[11px] leading-relaxed">
+                              <strong className="text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded text-[10px] font-bold mr-1">Solicita:</strong> 
+                              {item.insumos_solicitados}
+                            </p>
+                            <div className="grid grid-cols-2 gap-1 text-[10px] text-slate-500 font-medium">
+                              <span>🕒 Horario: {item.horario || 'No especificado'}</span>
+                              <span>📞 Telf: {item.contacto_centro || 'S/C'}</span>
+                            </div>
+                            <div className="flex justify-end pt-1">
+                              <a 
+                                href={`https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1 px-2.5 rounded flex items-center text-[10px]"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                🗺️ Cómo llegar
+                              </a>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      <a 
-                        href={`https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1.5 px-2.5 rounded-md flex items-center transition-all text-[10px] tracking-wide shadow-sm"
-                      >
-                        🗺️ Ruta
-                      </a>
-                    </div>
-                  </div>
-                ))
-              )}
+                    );
+                  })
+                )}
+              </div>
+            </div>
+
+          </div>
+        </main>
+      ) : (
+        /* PANEL DE HOSPITALES (Espacio limpio para la siguiente implementación) */
+        <main className="flex-1 max-w-7xl w-full mx-auto p-6 text-center">
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 max-w-xl mx-auto mt-10">
+            <span className="text-4xl block mb-3">🏥</span>
+            <h3 className="text-lg font-black text-slate-800">Módulo de Cotejo Hospitalario</h3>
+            <p className="text-slate-500 text-xs mt-2 leading-relaxed">
+              Aquí se integrarán las listas de pacientes ingresados, traslados y estatus de las salas de urgencias de los principales centros médicos del país para cruzarlos con los reportes de personas desaparecidas en tiempo real.
+            </p>
+            <div className="mt-6 p-3 bg-indigo-50 text-indigo-700 rounded-xl text-[11px] font-semibold inline-block">
+              🚀 Próxima actualización en desarrollo
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      )}
 
-      {/* MODAL EMERGENTE: Se activa únicamente al presionar los botones del header */}
+      {/* MODAL EMERGENTE DE FORMULARIOS */}
       {formActivo && (
-        <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-[100] animate-fade-in">
+        <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-[100]">
           <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-5 max-w-md w-full max-h-[90vh] overflow-y-auto relative">
-            
-            {/* Botón Cerrar */}
             <button 
               onClick={() => setFormActivo(null)}
               className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold transition-all"
             >
               ✕
             </button>
-
             <h2 className="text-xs font-black tracking-wider text-slate-400 mb-4 uppercase">
               {formActivo === 'rescate' ? '🚨 Registrar Solicitud de Rescate' : '📦 Registrar Punto de Acopio'}
             </h2>
-
-            {/* Alerta de geolocalización contextual dentro del modal */}
             {coordenadaSeleccionada ? (
               <div className="bg-blue-50 border border-blue-200 text-blue-700 text-[11px] py-2 px-3 rounded-lg text-center font-semibold mb-4 flex items-center justify-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
-                Coordenadas vinculadas al formulario con éxito.
+                Ubicación vinculada de forma exitosa.
               </div>
             ) : (
               <div className="bg-amber-50 border border-amber-200 text-amber-900 text-[11px] py-2.5 px-3 rounded-lg text-center font-medium mb-4">
-                ⚠️ <strong>Nota:</strong> No has fijado un punto. Puedes cerrar este cuadro, marcar el mapa o usar el buscador de calles, y luego volver a abrir este registro.
+                ⚠️ No has seleccionado un punto en el mapa. Cierra este cuadro si deseas marcarlo antes de rellenar los datos.
               </div>
             )}
-
-            {/* Renderizado condicional del formulario seleccionado */}
             <div className="mt-2">
               {formActivo === 'rescate' ? (
-                <FormularioRescate 
-                  coordenadas={coordenadaSeleccionada} 
-                  onAgregarExitoso={() => { setCoordenadaSeleccionada(null); setFormActivo(null); cargarDatos(); }} 
-                />
+                <FormularioRescate coordenadas={coordenadaSeleccionada} onAgregarExitoso={() => { setCoordenadaSeleccionada(null); setFormActivo(null); cargarDatos(); }} />
               ) : (
-                <FormularioAcopio 
-                  coordinates={coordenadaSeleccionada} // Asegurar concordancia con la prop de tu componente
-                  coordenadas={coordenadaSeleccionada} 
-                  onAgregarExitoso={() => { setCoordenadaSeleccionada(null); setFormActivo(null); cargarDatos(); }} 
-                />
+                <FormularioAcopio coordenadas={coordenadaSeleccionada} onAgregarExitoso={() => { setCoordenadaSeleccionada(null); setFormActivo(null); cargarDatos(); }} />
               )}
             </div>
           </div>
