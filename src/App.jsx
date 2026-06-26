@@ -5,6 +5,9 @@ import FormularioRescate from './components/FormularioRescate';
 import FormularioAcopio from './components/FormularioAcopio';
 import BuscadorDireccion from './components/BuscadorDireccion';
 
+// Importación del set de datos consolidado con más entradas
+import { PACIENTES_HOSPITALES } from './pacientesData';
+
 export default function App() {
   const [rescates, setRescates] = useState([]);
   const [acopios, setAcopios] = useState([]);
@@ -13,11 +16,16 @@ export default function App() {
   const [gpsUsuario, setGpsUsuario] = useState(null);
   const [soloCriticos, setSoloCriticos] = useState(false); 
 
+  // Estados específicos para el Módulo de Consulta Hospitalaria
+  const [pacientes] = useState(PACIENTES_HOSPITALES); // Carga inicial estática
+  const [busquedaPaciente, setBusquedaPaciente] = useState('');
+  const [filtroHospital, setFiltroHospital] = useState('');
+
   // Control de expansión de tarjetas independientes para no abrumar la vista
   const [rescateExpandido, setRescateExpandido] = useState(null);
   const [acopioExpandido, setAcopioExpandido] = useState(null);
 
-  // Control de la sección activa (Listo para 'mapa' u 'hospitales' en el futuro)
+  // Control de la sección activa
   const [seccionActiva, setSeccionActiva] = useState('mapa'); 
 
   const gpsUsuarioRef = useRef(gpsUsuario);
@@ -41,6 +49,10 @@ export default function App() {
     const { data: res } = await supabase.from('reportes_rescate').select('*').order('creado_en', { ascending: false });
     const { data: aco } = await supabase.from('centros_acopio').select('*').order('creado_en', { ascending: false });
     
+    // NOTA: Si prefieres migrar los pacientes a Supabase, descomenta las siguientes líneas:
+    // const { data: pac } = await supabase.from('pacientes_hospitales').select('*').order('nombre', { ascending: true });
+    // if (pac) setPacientes(pac);
+
     let datosRescates = res || [];
     let datosAcopios = aco || [];
 
@@ -93,7 +105,15 @@ export default function App() {
     ? rescates.filter(item => item.sospecha_supervivientes) 
     : rescates;
 
-  // Conteos para el resumen rápido (Card de KPIs)
+  // Lógica de filtrado en tiempo real para el padrón de pacientes
+  const pacientesFiltrados = pacientes.filter(p => {
+    const normalizar = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const coincideBusqueda = normalizar(p.nombre).includes(normalizar(busquedaPaciente));
+    const coincideHospital = filtroHospital === '' || p.hospital === filtroHospital;
+    return coincideBusqueda && coincideHospital;
+  });
+
+  // Conteos para el resumen rápido (Cards de KPIs)
   const totalCriticos = rescates.filter(item => item.sospecha_supervivientes).length;
 
   return (
@@ -141,7 +161,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* SUB-NAVBAR: Menú Limpio de Secciones (Preparado para Hospitales) */}
+      {/* SUB-NAVBAR */}
       <div className="bg-white border-b border-slate-200 sticky top-[73px] z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-12">
           <div className="flex gap-1 h-full">
@@ -160,13 +180,13 @@ export default function App() {
               }`}
             >
               🏥 Reportes de Hospitales 
-              <span className="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-sans font-normal">Próximamente</span>
+              <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full font-sans font-bold">Activo</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* PANEL DE RESUMEN RÁPIDO (Métricas limpias para evitar caos visual) */}
+      {/* PANEL DE RESUMEN RÁPIDO */}
       <section className="bg-slate-100/80 border-b border-slate-200/60 py-3 px-4">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
@@ -193,8 +213,8 @@ export default function App() {
           <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
             <div className="p-2 rounded-lg bg-blue-50 text-blue-600 font-bold text-lg">👥</div>
             <div>
-              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Búsqueda Personas</p>
-              <p className="text-xs font-bold text-slate-400 mt-1">Conectando...</p>
+              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Censo Hospitalario</p>
+              <p className="text-lg font-black text-slate-800 mt-1">{pacientes.length} Registros</p>
             </div>
           </div>
         </div>
@@ -278,7 +298,6 @@ export default function App() {
                           )}
                         </div>
 
-                        {/* Contenido Expandible controlado */}
                         {estaExpandido && (
                           <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2 animate-fade-in">
                             <p className="text-[11px] leading-relaxed"><strong className="text-slate-700">Detalles:</strong> {item.detalles_emergencia}</p>
@@ -294,7 +313,7 @@ export default function App() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1 px-2.5 rounded flex items-center text-[10px]"
-                                onClick={(e) => e.stopPropagation()} // Evita cerrar la tarjeta al pulsar el link
+                                onClick={(e) => e.stopPropagation()} 
                               >
                                 🗺️ Trazar Ruta
                               </a>
@@ -340,7 +359,6 @@ export default function App() {
                           <p className="text-slate-500 text-[10px] truncate mt-0.5">🔍 Clic para ver insumos solicitados y horarios</p>
                         )}
 
-                        {/* Contenido Expandible */}
                         {estaExpandido && (
                           <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2 animate-fade-in">
                             <p className="text-[11px] leading-relaxed">
@@ -374,16 +392,100 @@ export default function App() {
           </div>
         </main>
       ) : (
-        /* PANEL DE HOSPITALES (Espacio limpio para la siguiente implementación) */
-        <main className="flex-1 max-w-7xl w-full mx-auto p-6 text-center">
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 max-w-xl mx-auto mt-10">
-            <span className="text-4xl block mb-3">🏥</span>
-            <h3 className="text-lg font-black text-slate-800">Módulo de Cotejo Hospitalario</h3>
-            <p className="text-slate-500 text-xs mt-2 leading-relaxed">
-              Aquí se integrarán las listas de pacientes ingresados, traslados y estatus de las salas de urgencias de los principales centros médicos del país para cruzarlos con los reportes de personas desaparecidas en tiempo real.
-            </p>
-            <div className="mt-6 p-3 bg-indigo-50 text-indigo-700 rounded-xl text-[11px] font-semibold inline-block">
-              🚀 Próxima actualización en desarrollo
+        /* IMPLEMENTACIÓN INTERACTIVA: PANEL DE CONSULTA DE PACIENTES */
+        <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col gap-4">
+          <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col flex-1">
+            
+            {/* Cabecera interna y controles de filtrado */}
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-slate-100 pb-4 mb-4">
+              <div>
+                <h3 className="text-sm font-black text-slate-800 tracking-tight uppercase flex items-center gap-2">
+                  🏥 Buscador de Personas en Centros Médicos
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Ingrese el nombre o apellido de la persona para verificar si ingresó en los reportes de emergencias.
+                </p>
+              </div>
+              
+              {/* Barra de Filtros Integrada */}
+              <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-2 flex-1 max-w-xl justify-end">
+                <input 
+                  type="text"
+                  placeholder="🔍 Buscar por nombre o apellido..."
+                  value={busquedaPaciente}
+                  onChange={(e) => setBusquedaPaciente(e.target.value)}
+                  className="text-xs bg-slate-50/80 border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 flex-1 font-medium"
+                />
+                <select
+                  value={filtroHospital}
+                  onChange={(e) => setFiltroHospital(e.target.value)}
+                  className="text-xs bg-slate-50/80 border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-bold text-slate-700"
+                >
+                  <option value="">🏥 Todos los Hospitales</option>
+                  <option value="Hospital Universitario de Caracas">Hosp. Universitario de Caracas</option>
+                  <option value="Cruz Roja">Cruz Roja</option>
+                  <option value="Periférico de Catia">Periférico de Catia</option>
+                  <option value="Hospital Domingo Luciani">Hosp. Domingo Luciani</option>
+                  <option value="Hospital Pérez Carreño">Hosp. Pérez Carreño</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Contador de resultados */}
+            <div className="text-[11px] font-bold text-slate-400 mb-3 uppercase tracking-wider">
+              {pacientesFiltrados.length === 1 
+                ? 'Se encontró 1 persona registrada' 
+                : `Se encontraron ${pacientesFiltrados.length} personas registradas`}
+            </div>
+
+            {/* Tabla Dinámica de Resultados */}
+            <div className="flex-1 overflow-x-auto border border-slate-100 rounded-xl shadow-inner max-h-[60vh]">
+              <table className="w-full text-left border-collapse text-xs relative">
+                <thead>
+                  <tr className="bg-slate-100/70 text-slate-500 font-black tracking-wider border-b border-slate-200/60 sticky top-0 backdrop-blur-sm z-10">
+                    <th className="p-3 w-16 text-center">N°</th>
+                    <th className="p-3">Apellidos y Nombres</th>
+                    <th className="p-3">Centro Asistencial</th>
+                    <th className="p-3 w-24 text-center">Edad</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-700 font-medium">
+                  {pacientesFiltrados.length === 0 ? (
+                    <tr>
+                      <td colSpan="4" className="text-center py-16 text-slate-400 font-bold bg-slate-50/30">
+                        ❌ No se encontraron registros con los criterios ingresados.
+                      </td>
+                    </tr>
+                  ) : (
+                    pacientesFiltrados.map((p, index) => (
+                      <tr key={p.id || index} className="hover:bg-slate-50/80 transition-colors">
+                        <td className="p-3 font-mono text-slate-400 text-center bg-slate-50/20">{index + 1}</td>
+                        <td className="p-3 font-bold text-slate-900 tracking-tight uppercase">{p.nombre}</td>
+                        <td className="p-3">
+                          <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-black tracking-wide ${
+                            p.hospital.includes('Universitario') ? 'bg-blue-50 text-blue-700 border border-blue-200/50' :
+                            p.hospital.includes('Cruz Roja') ? 'bg-red-50 text-red-700 border border-red-200/50' :
+                            p.hospital.includes('Catia') ? 'bg-orange-50 text-orange-700 border border-orange-200/50' :
+                            p.hospital.includes('Luciani') ? 'bg-purple-50 text-purple-700 border border-purple-200/50' : 
+                            'bg-emerald-50 text-emerald-700 border border-emerald-200/50'
+                          }`}>
+                            {p.hospital}
+                          </span>
+                        </td>
+                        <td className="p-3 text-center font-mono font-bold text-slate-600 bg-slate-50/10">
+                          {p.edad || '—'}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Banner de aviso al pie de la tabla */}
+            <div className="mt-4 p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl text-[10px] text-indigo-800 flex items-center gap-2 font-medium">
+              <span>ℹ️</span>
+              Este padrón refleja exclusivamente los ingresos oficiales reportados y validados durante la contingencia civil.
             </div>
           </div>
         </main>
