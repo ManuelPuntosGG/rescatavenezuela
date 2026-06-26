@@ -83,7 +83,7 @@ export default function App() {
       <header className="bg-slate-900 text-white p-4 shadow-md">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div>
-            <h1 className="text-xl font-black text-red-500 border-0 p-0 m-0">🚨 S.O.S. CRISIS VENEZUELA</h1>
+            <h1 className="text-xl font-black text-red-500 border-0 p-0 m-0">🚨 Rescata Venezuela</h1>
             <p className="text-xs text-slate-400 m-0">Plataforma Civil de Apoyo ante Sismos del 24 de Junio</p>
           </div>
           <button 

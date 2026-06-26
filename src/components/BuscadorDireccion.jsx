@@ -26,7 +26,7 @@ export default function BuscadorDireccion({ onDireccionEncontrada }) {
         };
         // Enviamos la coordenada de vuelta a App.jsx
         onDireccionEncontrada(coordenadas);
-        alert(`Ubicación encontrada: ${resultado.display_name.split(',')[0]}`);
+        // alert(`Ubicación encontrada: ${resultado.display_name.split(',')[0]}`);
       } else {
         alert("No se encontró la dirección. Intenta añadir más detalles (ej. 'Sector El Viñedo, Valencia').");
       }

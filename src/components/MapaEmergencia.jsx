@@ -6,6 +6,7 @@ export default function MapaEmergencia({ rescates, acopios, onMapClick, coordena
   const mapRef = useRef(null);
   const markersRef = useRef([]);
 
+  // 1. Inicializar el mapa (Solo una vez)
   useEffect(() => {
     if (!mapContainer.current) return;
     
@@ -21,6 +22,23 @@ export default function MapaEmergencia({ rescates, acopios, onMapClick, coordena
     }
   }, [onMapClick]);
 
+  // 2. NUEVO EFECTO: Mover la cámara del mapa cuando se busca o selecciona una coordenada
+  useEffect(() => {
+    if (!mapRef.current || !coordenadaSeleccionada) return;
+    
+    // Soporta tanto el formato del mapa {lat, lng} como el de Leaflet directamente
+    const lat = coordenadaSeleccionada.lat;
+    const lng = coordenadaSeleccionada.lng;
+    
+    if (lat && lng) {
+      mapRef.current.flyTo([lat, lng], 16, {
+        animate: true,
+        duration: 1.5 // Duración de la animación en segundos
+      });
+    }
+  }, [coordenadaSeleccionada]);
+
+  // 3. Dibujar y limpiar marcadores en tiempo real
   useEffect(() => {
     if (!mapRef.current) return;
     const map = mapRef.current;
@@ -43,7 +61,7 @@ export default function MapaEmergencia({ rescates, acopios, onMapClick, coordena
       className: 'marker-seleccion' 
     });
 
-    // Dibujar marcadores de Rescate con botón de ruta
+    // Dibujar marcadores de Rescate
     if (rescates && rescates.length > 0) {
       rescates.forEach((item) => {
         const marker = L.marker([item.latitud, item.longitud], { icon: iconRescate })
@@ -55,7 +73,7 @@ export default function MapaEmergencia({ rescates, acopios, onMapClick, coordena
               <strong>Detalles:</strong> ${item.detalles_emergencia}<br/>
               ${item.foto_url ? `<img src="${item.foto_url}" style="width:100%; max-height:100px; object-fit:cover; margin-top:5px; border-radius:4px;" />` : ''}
               <strong>Contacto:</strong> ${item.contacto_reportante}<br/>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitud},${item.longitud}" 
+              <a href="https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}" 
                  target="_blank" rel="noopener noreferrer"
                  style="display:block; text-align:center; background-color:#1e293b; color:white; font-weight:bold; font-size:11px; padding:6px; margin-top:8px; border-radius:4px; text-decoration:none; box-shadow:0 1px 3px rgba(0,0,0,0.2);">
                  🗺️ Trazar ruta en Google Maps
@@ -66,7 +84,7 @@ export default function MapaEmergencia({ rescates, acopios, onMapClick, coordena
       });
     }
 
-    // Dibujar marcadores de Centros de Acopio con botón de ruta
+    // Dibujar marcadores de Centros de Acopio
     if (acopios && acopios.length > 0) {
       acopios.forEach((item) => {
         const marker = L.marker([item.latitud, item.longitud], { icon: iconAcopio })
@@ -78,7 +96,7 @@ export default function MapaEmergencia({ rescates, acopios, onMapClick, coordena
               <strong>Insumos:</strong> <span style="color:#dc2626;">${item.insumos_solicitados}</span><br/>
               <strong>Horario:</strong> ${item.horario || 'No especificado'}<br/>
               <strong>Contacto:</strong> ${item.contacto_centro}<br/>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitud},${item.longitud}" 
+              <a href="https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}" 
                  target="_blank" rel="noopener noreferrer"
                  style="display:block; text-align:center; background-color:#1e293b; color:white; font-weight:bold; font-size:11px; padding:6px; margin-top:8px; border-radius:4px; text-decoration:none; box-shadow:0 1px 3px rgba(0,0,0,0.2);">
                  🗺️ Trazar ruta en Google Maps
