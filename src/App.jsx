@@ -8,6 +8,12 @@ import BuscadorDireccion from './components/BuscadorDireccion';
 // Importación del set de datos consolidado con más entradas
 import { PACIENTES_HOSPITALES } from './pacientesData';
 
+// Optimizando rendimiento: Definida afuera para evitar recreación en cada render
+const normalizarTexto = (str) => {
+  if (!str) return "";
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+};
+
 export default function App() {
   const [rescates, setRescates] = useState([]);
   const [acopios, setAcopios] = useState([]);
@@ -48,10 +54,6 @@ export default function App() {
   const cargarDatos = async (posicionGps = gpsUsuarioRef.current) => {
     const { data: res } = await supabase.from('reportes_rescate').select('*').order('creado_en', { ascending: false });
     const { data: aco } = await supabase.from('centros_acopio').select('*').order('creado_en', { ascending: false });
-    
-    // NOTA: Si prefieres migrar los pacientes a Supabase, descomenta las siguientes líneas:
-    // const { data: pac } = await supabase.from('pacientes_hospitales').select('*').order('nombre', { ascending: true });
-    // if (pac) setPacientes(pac);
 
     let datosRescates = res || [];
     let datosAcopios = aco || [];
@@ -105,15 +107,15 @@ export default function App() {
     ? rescates.filter(item => item.sospecha_supervivientes) 
     : rescates;
 
-  // Lógica de filtrado en tiempo real para el padrón de pacientes
+  // Lógica de filtrado protegida contra valores nulos o indefinidos
   const pacientesFiltrados = pacientes.filter(p => {
-    const normalizar = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    const coincideBusqueda = normalizar(p.nombre).includes(normalizar(busquedaPaciente));
-    const coincideHospital = filtroHospital === '' || p.hospital === filtroHospital;
+    const nombrePaciente = p.nombre || "";
+    const hospitalPaciente = p.hospital || "";
+    const coincideBusqueda = normalizarTexto(nombrePaciente).includes(normalizarTexto(busquedaPaciente));
+    const coincideHospital = filtroHospital === '' || hospitalPaciente === filtroHospital;
     return coincideBusqueda && coincideHospital;
   });
 
-  // Conteos para el resumen rápido (Cards de KPIs)
   const totalCriticos = rescates.filter(item => item.sospecha_supervivientes).length;
 
   return (
@@ -133,7 +135,6 @@ export default function App() {
             <p className="text-xs text-slate-400 mt-0.5">Monitoreo Civil de Contingencias e Insumos Logísticos</p>
           </div>
 
-          {/* Botones de Acción de Registro y GPS */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <button 
               onClick={() => setFormActivo('rescate')}
@@ -180,7 +181,7 @@ export default function App() {
               }`}
             >
               🏥 Reportes de Hospitales 
-              <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full font-sans font-bold">Activo</span>
+              <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full font-bold">Activo</span>
             </button>
           </div>
         </div>
@@ -224,7 +225,6 @@ export default function App() {
       {seccionActiva === 'mapa' ? (
         <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-5">
           
-          {/* Columna de Mapa (2/3) */}
           <div className="lg:col-span-2 flex flex-col gap-3">
             <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
               <div className="flex-1">
@@ -250,7 +250,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Columna de Listados Dinámicos e Intuitivos (1/3) */}
           <div className="lg:col-span-1 space-y-4 flex flex-col h-[600px] lg:h-auto overflow-hidden">
             
             {/* Lista de Rescates */}
@@ -299,7 +298,7 @@ export default function App() {
                         </div>
 
                         {estaExpandido && (
-                          <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2 animate-fade-in">
+                          <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2">
                             <p className="text-[11px] leading-relaxed"><strong className="text-slate-700">Detalles:</strong> {item.detalles_emergencia}</p>
                             <div className="flex flex-col gap-0.5 text-[10px]">
                               <span className="font-semibold text-slate-700">📞 Contacto: {item.contacto_reportante}</span>
@@ -308,8 +307,9 @@ export default function App() {
                               )}
                             </div>
                             <div className="flex justify-end pt-1">
+                              {/* CORREGIDO: Sintaxis de template literal y URL estándar de Google Maps */}
                               <a 
-                                href={`https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}`}
+                                href={`https://www.google.com/maps?q=${item.latitud},${item.longitud}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1 px-2.5 rounded flex items-center text-[10px]"
@@ -360,7 +360,7 @@ export default function App() {
                         )}
 
                         {estaExpandido && (
-                          <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2 animate-fade-in">
+                          <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2">
                             <p className="text-[11px] leading-relaxed">
                               <strong className="text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded text-[10px] font-bold mr-1">Solicita:</strong> 
                               {item.insumos_solicitados}
@@ -370,8 +370,9 @@ export default function App() {
                               <span>📞 Telf: {item.contacto_centro || 'S/C'}</span>
                             </div>
                             <div className="flex justify-end pt-1">
+                              {/* CORREGIDO: Sintaxis de template literal y URL estándar de Google Maps */}
                               <a 
-                                href={`https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}`}
+                                href={`https://www.google.com/maps?q=${item.latitud},${item.longitud}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1 px-2.5 rounded flex items-center text-[10px]"
@@ -392,11 +393,10 @@ export default function App() {
           </div>
         </main>
       ) : (
-        /* IMPLEMENTACIÓN INTERACTIVA: PANEL DE CONSULTA DE PACIENTES */
+        /* PANEL DE CONSULTA DE PACIENTES */
         <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col gap-4">
           <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col flex-1">
             
-            {/* Cabecera interna y controles de filtrado */}
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-slate-100 pb-4 mb-4">
               <div>
                 <h3 className="text-sm font-black text-slate-800 tracking-tight uppercase flex items-center gap-2">
@@ -407,7 +407,6 @@ export default function App() {
                 </p>
               </div>
               
-              {/* Barra de Filtros Integrada */}
               <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-2 flex-1 max-w-xl justify-end">
                 <input 
                   type="text"
@@ -431,14 +430,12 @@ export default function App() {
               </div>
             </div>
 
-            {/* Contador de resultados */}
             <div className="text-[11px] font-bold text-slate-400 mb-3 uppercase tracking-wider">
               {pacientesFiltrados.length === 1 
                 ? 'Se encontró 1 persona registrada' 
                 : `Se encontraron ${pacientesFiltrados.length} personas registradas`}
             </div>
 
-            {/* Tabla Dinámica de Resultados */}
             <div className="flex-1 overflow-x-auto border border-slate-100 rounded-xl shadow-inner max-h-[60vh]">
               <table className="w-full text-left border-collapse text-xs relative">
                 <thead>
@@ -457,32 +454,34 @@ export default function App() {
                       </td>
                     </tr>
                   ) : (
-                    pacientesFiltrados.map((p, index) => (
-                      <tr key={p.id || index} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="p-3 font-mono text-slate-400 text-center bg-slate-50/20">{index + 1}</td>
-                        <td className="p-3 font-bold text-slate-900 tracking-tight uppercase">{p.nombre}</td>
-                        <td className="p-3">
-                          <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-black tracking-wide ${
-                            p.hospital.includes('Universitario') ? 'bg-blue-50 text-blue-700 border border-blue-200/50' :
-                            p.hospital.includes('Cruz Roja') ? 'bg-red-50 text-red-700 border border-red-200/50' :
-                            p.hospital.includes('Catia') ? 'bg-orange-50 text-orange-700 border border-orange-200/50' :
-                            p.hospital.includes('Luciani') ? 'bg-purple-50 text-purple-700 border border-purple-200/50' : 
-                            'bg-emerald-50 text-emerald-700 border border-emerald-200/50'
-                          }`}>
-                            {p.hospital}
-                          </span>
-                        </td>
-                        <td className="p-3 text-center font-mono font-bold text-slate-600 bg-slate-50/10">
-                          {p.edad || '—'}
-                        </td>
-                      </tr>
-                    ))
+                    pacientesFiltrados.map((p, index) => {
+                      const nombreHosp = p.hospital || ""; // Protección anti-errores
+                      return (
+                        <tr key={p.id || index} className="hover:bg-slate-50/80 transition-colors">
+                          <td className="p-3 font-mono text-slate-400 text-center bg-slate-50/20">{index + 1}</td>
+                          <td className="p-3 font-bold text-slate-900 tracking-tight uppercase">{p.nombre || "Sin Nombre"}</td>
+                          <td className="p-3">
+                            <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-black tracking-wide ${
+                              nombreHosp.includes('Universitario') ? 'bg-blue-50 text-blue-700 border border-blue-200/50' :
+                              nombreHosp.includes('Cruz Roja') ? 'bg-red-50 text-red-700 border border-red-200/50' :
+                              nombreHosp.includes('Catia') ? 'bg-orange-50 text-orange-700 border border-orange-200/50' :
+                              nombreHosp.includes('Luciani') ? 'bg-purple-50 text-purple-700 border border-purple-200/50' : 
+                              'bg-emerald-50 text-emerald-700 border border-emerald-200/50'
+                            }`}>
+                              {nombreHosp || "No Especificado"}
+                            </span>
+                          </td>
+                          <td className="p-3 text-center font-mono font-bold text-slate-600 bg-slate-50/10">
+                            {p.edad || '—'}
+                          </td>
+                        </tr>
+                      );
+                    })
                   )}
                 </tbody>
               </table>
             </div>
 
-            {/* Banner de aviso al pie de la tabla */}
             <div className="mt-4 p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl text-[10px] text-indigo-800 flex items-center gap-2 font-medium">
               <span>ℹ️</span>
               Este padrón refleja exclusivamente los ingresos oficiales reportados y validados durante la contingencia civil.
