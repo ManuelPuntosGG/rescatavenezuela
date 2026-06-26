@@ -33,23 +33,32 @@ export default function App() {
   useEffect(() => {
     // Asegúrate de que el archivo esté en la carpeta /public
     fetch('/Registro_Maestro_Pacientes_Sismo_2026.csv')
-      .then(response => response.text())
-      .then(csvText => {
-        Papa.parse(csvText, {
-          header: true,
-          skipEmptyLines: true,
-          complete: (results) => {
-            // Mapeamos los encabezados del CSV a las llaves que tu app usa
-            const datosFormateados = results.data.map((item, index) => ({
-              id: index,
+    .then(response => response.text())
+    .then(csvText => {
+      Papa.parse(csvText, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (results) => {
+          // 1. IMPRESIÓN DE DEPURACIÓN (Míralo en la consola de tu navegador: F12)
+          console.log("Primera fila detectada:", results.data[0]); 
+          console.log("Keys detectadas:", Object.keys(results.data[0]));
+
+          // 2. Mapeo más robusto
+          const datosFormateados = results.data.map((item, index) => {
+            // Buscamos las llaves. Si tu csv tiene espacios, los limpiamos:
+            return {
+              id: item['N°'] || item['\ufeffN°'] || index, 
               nombre: item['Apellidos y Nombres'] || "Sin Nombre",
               hospital: item['Hospital'] || "Sin Hospital",
-              edad: item['Edad'] || "—"
-            }));
-            setPacientes(datosFormateados);
-          }
-        });
+              edad: item['Edad'] || "—",
+              cedula: item['Cédula / ID'] || "—"
+            };
+          });
+          setPacientes(datosFormateados);
+        }
+      });
       })
+      
       .catch(err => console.error("Error cargando CSV:", err));
   }, []);
 
