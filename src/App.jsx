@@ -446,6 +446,7 @@ export default function App() {
                   <option value="Periférico de Catia">Periférico de Catia</option>
                   <option value="Hospital Domingo Luciani">Hosp. Domingo Luciani</option>
                   <option value="Hospital Pérez Carreño">Hosp. Pérez Carreño</option>
+                  <option value="Hospital Militar Universitario Dr. Carlos Arvelo">Hosp. Militar Universitario Dr. Carlos Arvelo</option>
                 </select>
               </div>
             </div>
