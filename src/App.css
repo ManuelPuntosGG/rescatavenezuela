@@ -1,85 +1,97 @@
 /* ==========================================================================
    CONFIGURACIÓN DE VARIABLES Y ESTILOS GLOBALES
    ========================================================================== */
-   :root {
-    --indigo-primary: #4f46e5;
-    --indigo-hover: #4338ca;
-    --slate-border: #e2e8f0;
-    --scrollbar-thumb: #cbd5e1;
-    --scrollbar-thumb-hover: #94a3b8;
+:root {
+  --blue-primary: #2563eb; /* Equivalente a blue-600 en Tailwind */
+  --blue-hover: #1d4ed8;   /* Equivalente a blue-700 en Tailwind */
+  --red-primary: #dc2626;  /* Equivalente a red-600 en Tailwind */
+  --slate-border: #e2e8f0;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
+}
+
+/* Comportamiento de scroll global fluido */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ==========================================================================
+   BARRAS DE DESPLAZAMIENTO PERSONALIZADAS (.custom-scrollbar)
+   ========================================================================== */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 20px;
+  border: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+/* ==========================================================================
+   MICRO-INTERACCIONES Y ANIMACIONES
+   ========================================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
   }
-  
-  /* Comportamiento de scroll global fluido */
-  html {
-    scroll-behavior: smooth;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* ==========================================================================
-     BARRAS DE DESPLAZAMIENTO PERSONALIZADAS (.custom-scrollbar)
-     Evitan el ancho invasivo por defecto y mantienen la interfaz limpia.
-     ========================================================================== */
-  .custom-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
-  
-  /* Soporte para motores Webkit (Chrome, Safari, Edge, Brave) */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb);
-    border-radius: 20px;
-    border: transparent;
-    transition: background-color 0.2s ease;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: var(--scrollbar-thumb-hover);
-  }
-  
-  /* ==========================================================================
-     MICRO-INTERACCIONES Y ANIMACIONES
-     Aseguran transiciones suaves sin retrasar el tiempo de respuesta del usuario.
-     ========================================================================== */
-  
-  /* Animación de entrada para los detalles de las tarjetas y modales */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .animate-fade-in {
-    animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  
-  /* Sutil efecto interactivo al presionar elementos clicables */
-  button:active, 
-  .cursor-pointer:active {
-    transform: scale(0.98);
-  }
-  
-  /* Accesibilidad: Indicador de foco claro para navegación por teclado */
-  button:focus-visible,
-  input:focus-visible,
-  a:focus-visible {
-    outline: 2px solid var(--indigo-primary);
-    outline-offset: 2px;
-  }
-  
-  /* Ajuste de z-index específico para componentes que interactúan con Leaflet/Mapas */
-  .leaflet-container {
-    z-index: 10 !important;
-  }
+}
+
+.animate-scaleUp {
+  animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Sutil efecto interactivo al presionar elementos clicables */
+button:active, 
+.cursor-pointer:active {
+  transform: scale(0.98);
+}
+
+/* Accesibilidad: Indicador de foco claro para navegación por teclado */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--blue-primary);
+  outline-offset: 2px;
+}
+
+/* Ajuste de z-index específico para componentes que interactúan con Leaflet/Mapas */
+.leaflet-container {
+  z-index: 10 !important;
+}
