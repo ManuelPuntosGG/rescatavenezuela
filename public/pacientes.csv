@@ -310,130 +310,801 @@ N°,Hospital,Apellidos y Nombres,Edad,Cédula / ID,Teléfono,Dirección,Observac
 335,Hospital Pérez Carreño,GONZALEZ ADRIANA,,82230906,,,
 336,Hospital Pérez Carreño,MARTINEZ GABRIEL,,,,,
 337,Hospital Pérez Carreño,MARTINEZ ZORAIDA,,6045544,,,
-338,Hospital Militar Universitario Dr. Carlos Arvelo,Murillo Landaeta K�liz,23,28443736,,El Para�so,AFILIADA
-339,Hospital Militar Universitario Dr. Carlos Arvelo,L�pez Joselyn,45,15034143,,SAN MARTIN,PNA
-340,Hospital Militar Universitario Dr. Carlos Arvelo,Visedha Gonz�lez,28,26668182,,El Para�so,PNA
+338,Hospital Militar Universitario Dr. Carlos Arvelo,Murillo Landaeta K�liz,23,28443736,,El Para�so,AFILIADA
+339,Hospital Militar Universitario Dr. Carlos Arvelo,L�pez Joselyn,45,15034143,,SAN MARTIN,PNA
+340,Hospital Militar Universitario Dr. Carlos Arvelo,Visedha Gonz�lez,28,26668182,,El Para�so,PNA
 341,Hospital Militar Universitario Dr. Carlos Arvelo,Mora Yosmar,52,11649384,,ARTIGAS,PNA
 342,Hospital Militar Universitario Dr. Carlos Arvelo,Castillo Deimar,33,21282503,,????????,PNA
-343,Hospital Militar Universitario Dr. Carlos Arvelo,G�mez Torres Heyribi,20,33025749,,GUAIRATARO,PNA
+343,Hospital Militar Universitario Dr. Carlos Arvelo,G�mez Torres Heyribi,20,33025749,,GUAIRATARO,PNA
 344,Hospital Militar Universitario Dr. Carlos Arvelo,Rangel Yesenia,54,11380548,,CATIA,PNA
-345,Hospital Militar Universitario Dr. Carlos Arvelo,Ram�rez Amundarain Ivana,50,14451022,,CAPUCHINO,PNA
-346,Hospital Militar Universitario Dr. Carlos Arvelo,Brice�o Mirabal Josefina,77,3970281,,Catia,PNA
-347,Hospital Militar Universitario Dr. Carlos Arvelo,Luca Gonz�lez Yamilet,49,13610512,,Artigas,PNA
+345,Hospital Militar Universitario Dr. Carlos Arvelo,Ram�rez Amundarain Ivana,50,14451022,,CAPUCHINO,PNA
+346,Hospital Militar Universitario Dr. Carlos Arvelo,Brice�o Mirabal Josefina,77,3970281,,Catia,PNA
+347,Hospital Militar Universitario Dr. Carlos Arvelo,Luca Gonz�lez Yamilet,49,13610512,,Artigas,PNA
 348,Hospital Militar Universitario Dr. Carlos Arvelo,Montilla Zelaya Herrera,54,6285593,,San Martin,PNA
 349,Hospital Militar Universitario Dr. Carlos Arvelo,Barrios Yolanda,77,5323419,,San Martin,PNA
-350,Hospital Militar Universitario Dr. Carlos Arvelo,�lvarez Bermo Elsy,53,11697809,,San Martin,PNA
+350,Hospital Militar Universitario Dr. Carlos Arvelo,�lvarez Bermo Elsy,53,11697809,,San Martin,PNA
 351,Hospital Militar Universitario Dr. Carlos Arvelo,Brito Alvarado Camila,17,32730226,,Macuto,PNA
 352,Hospital Militar Universitario Dr. Carlos Arvelo,Dorta Rodriguez Delia,92,6124942,,Quinta Crespo,PNA
 353,Hospital Militar Universitario Dr. Carlos Arvelo,Coen Blanco,66,5013048,,San Martin,PNA
-354,Hospital Militar Universitario Dr. Carlos Arvelo,Morillo Hern�ndez Nehomar,45,15280448,,Comandancia,AFILIADO
+354,Hospital Militar Universitario Dr. Carlos Arvelo,Morillo Hern�ndez Nehomar,45,15280448,,Comandancia,AFILIADO
 355,Hospital Militar Universitario Dr. Carlos Arvelo,Murillo Landaeta Yorgelis Yadil,26,28440024,,San Martin,PNA
 356,Hospital Militar Universitario Dr. Carlos Arvelo,Castro Lauriana,66,867005,,La Guaira,PNA
-357,Hospital Militar Universitario Dr. Carlos Arvelo,Hern�ndez Lilia,42,16598007,,La Guaira,PNA
-358,Hospital Militar Universitario Dr. Carlos Arvelo,S�nchez Alvarado Stefani,19,31913023,,San Martin,PNA
-359,Hospital Militar Universitario Dr. Carlos Arvelo,Alondra D�az Delismar del V.,35,20102925,,Higuerote,S/P
+357,Hospital Militar Universitario Dr. Carlos Arvelo,Hern�ndez Lilia,42,16598007,,La Guaira,PNA
+358,Hospital Militar Universitario Dr. Carlos Arvelo,S�nchez Alvarado Stefani,19,31913023,,San Martin,PNA
+359,Hospital Militar Universitario Dr. Carlos Arvelo,Alondra D�az Delismar del V.,35,20102925,,Higuerote,S/P
 360,Hospital Militar Universitario Dr. Carlos Arvelo,Torres Yenile,34,23634549,,San Martin,PNA
-361,Hospital Militar Universitario Dr. Carlos Arvelo,Hern�ndez P�rez Asdr�bal,48,13641724,,El Para�so,AFILIADO
-362,Hospital Militar Universitario Dr. Carlos Arvelo,Aguilar Ra�l,63,648196,,San Juan,PNA
-363,Hospital Militar Universitario Dr. Carlos Arvelo,Salas H�ctor,65,5921822,,San Martin,PNA
-364,Hospital Militar Universitario Dr. Carlos Arvelo,Pe�a Emma,86,2528862,,San Martin,PNA
+361,Hospital Militar Universitario Dr. Carlos Arvelo,Hern�ndez P�rez Asdr�bal,48,13641724,,El Para�so,AFILIADO
+362,Hospital Militar Universitario Dr. Carlos Arvelo,Aguilar Ra�l,63,648196,,San Juan,PNA
+363,Hospital Militar Universitario Dr. Carlos Arvelo,Salas H�ctor,65,5921822,,San Martin,PNA
+364,Hospital Militar Universitario Dr. Carlos Arvelo,Pe�a Emma,86,2528862,,San Martin,PNA
 365,Hospital Militar Universitario Dr. Carlos Arvelo,Guampa Pavia Milagro,66,8203313,,San Martin,PNA
 366,Hospital Militar Universitario Dr. Carlos Arvelo,Castillo Rosana,43,15366629,,San Martin,PNA
 367,Hospital Militar Universitario Dr. Carlos Arvelo,Coen Celia,66,5613048,,San Martin,PNA
-368,Hospital Militar Universitario Dr. Carlos Arvelo,P�rez Juan,42,16083970,,San Martin,PNA
-369,Hospital Militar Universitario Dr. Carlos Arvelo,Tadr�n Mirian,78,3551082,,Capuchino,AFILIADA
+368,Hospital Militar Universitario Dr. Carlos Arvelo,P�rez Juan,42,16083970,,San Martin,PNA
+369,Hospital Militar Universitario Dr. Carlos Arvelo,Tadr�n Mirian,78,3551082,,Capuchino,AFILIADA
 370,Hospital Militar Universitario Dr. Carlos Arvelo,Milans Gladys,68,5114187,,Artigas,PNA
-371,Hospital Militar Universitario Dr. Carlos Arvelo,Espinoza Germ�n,57,10810746,,Para�so,PNA
+371,Hospital Militar Universitario Dr. Carlos Arvelo,Espinoza Germ�n,57,10810746,,Para�so,PNA
 372,Hospital Militar Universitario Dr. Carlos Arvelo,Aguilar Carmen,21,,,San Martin,PNA
-373,Hospital Militar Universitario Dr. Carlos Arvelo,Pinto Jos�,77,649768,,San Martin,PNA
-374,Hospital Militar Universitario Dr. Carlos Arvelo,Salma Y�sica,31,22017564,,Carapita,PNA
-375,Hospital Militar Universitario Dr. Carlos Arvelo,G�mez Cr�spulo,20,33025749,,Guarataro,AFILIADO
-376,Hospital Militar Universitario Dr. Carlos Arvelo,Dur�n Aura,68,6330439,,Los Teques,PNA
+373,Hospital Militar Universitario Dr. Carlos Arvelo,Pinto Jos�,77,649768,,San Martin,PNA
+374,Hospital Militar Universitario Dr. Carlos Arvelo,Salma Y�sica,31,22017564,,Carapita,PNA
+375,Hospital Militar Universitario Dr. Carlos Arvelo,G�mez Cr�spulo,20,33025749,,Guarataro,AFILIADO
+376,Hospital Militar Universitario Dr. Carlos Arvelo,Dur�n Aura,68,6330439,,Los Teques,PNA
 377,Hospital Militar Universitario Dr. Carlos Arvelo,Cogollo Deiner,19,31572269,,San Martin,PNA
 378,Hospital Militar Universitario Dr. Carlos Arvelo,Guanche Delfin,74,3611764,,La Guaira,PNA
-379,Hospital Militar Universitario Dr. Carlos Arvelo,Mar�a Fragozo Pe�a,69,4556514,,La Guaira,PNA
-380,Hospital Militar Universitario Dr. Carlos Arvelo,Delia de Guerrero Pe�a,50,11642518,,Catia,PNA
+379,Hospital Militar Universitario Dr. Carlos Arvelo,Mar�a Fragozo Pe�a,69,4556514,,La Guaira,PNA
+380,Hospital Militar Universitario Dr. Carlos Arvelo,Delia de Guerrero Pe�a,50,11642518,,Catia,PNA
 381,Hospital Militar Universitario Dr. Carlos Arvelo,Ana de Pablo,76,4631806,,La Guaira,PNA
 382,Hospital Militar Universitario Dr. Carlos Arvelo,Navas Yayaira,35,18.210.310.,,Artigas,PNA
-383,Hospital Militar Universitario Dr. Carlos Arvelo,Garc�a Diana,59,6270588,,La Guaira,PNA
+383,Hospital Militar Universitario Dr. Carlos Arvelo,Garc�a Diana,59,6270588,,La Guaira,PNA
 384,Hospital Militar Universitario Dr. Carlos Arvelo,Zonis Nalleli,44,14289990,,San Juan,AFILIADO
 385,Hospital Militar Universitario Dr. Carlos Arvelo,Suares Tomasa,16,33067691,,La Guaira,AFILIADO
-386,Hospital Militar Universitario Dr. Carlos Arvelo,Vel�squez Jolimar,53,11638401,,La Guaira,AFILIADO
-387,Hospital Militar Universitario Dr. Carlos Arvelo,Varela Mar�a,32,21364211,,La Guaira,PNA
+386,Hospital Militar Universitario Dr. Carlos Arvelo,Vel�squez Jolimar,53,11638401,,La Guaira,AFILIADO
+387,Hospital Militar Universitario Dr. Carlos Arvelo,Varela Mar�a,32,21364211,,La Guaira,PNA
 388,Hospital Militar Universitario Dr. Carlos Arvelo,Villao Pastora Ducieidis,30,,,San Juan,PNA
-389,Hospital Militar Universitario Dr. Carlos Arvelo,Hern�ndez de Collado M�nica,55,8152742,,La Guaira,PNA
-390,Hospital Militar Universitario Dr. Carlos Arvelo,Gonz�lez Viviana,58,12540389,,La Guaira,PNA
-391,Hospital Militar Universitario Dr. Carlos Arvelo,Brito Vasquez N�lide,69,5120175,,San Martin,PNA
-392,Hospital Militar Universitario Dr. Carlos Arvelo,Guzm�n Aracelis,20,31556775,,San Antonio,PNA
-393,Hospital Militar Universitario Dr. Carlos Arvelo,G�mez Apostol Valentina,20,,,La Pastora,PNA
+389,Hospital Militar Universitario Dr. Carlos Arvelo,Hern�ndez de Collado M�nica,55,8152742,,La Guaira,PNA
+390,Hospital Militar Universitario Dr. Carlos Arvelo,Gonz�lez Viviana,58,12540389,,La Guaira,PNA
+391,Hospital Militar Universitario Dr. Carlos Arvelo,Brito Vasquez N�lide,69,5120175,,San Martin,PNA
+392,Hospital Militar Universitario Dr. Carlos Arvelo,Guzm�n Aracelis,20,31556775,,San Antonio,PNA
+393,Hospital Militar Universitario Dr. Carlos Arvelo,G�mez Apostol Valentina,20,,,La Pastora,PNA
 394,Hospital Militar Universitario Dr. Carlos Arvelo,Herrera Victor,27,26924423,,La Guaira,PNA
-395,Hospital Militar Universitario Dr. Carlos Arvelo,Rojas Jes�s,48,2321156,,La Guaira,PNA
+395,Hospital Militar Universitario Dr. Carlos Arvelo,Rojas Jes�s,48,2321156,,La Guaira,PNA
 396,Hospital Militar Universitario Dr. Carlos Arvelo,Santos Flores Mario H.,30,24869842,,La Guaira,AFILIADO
 397,Hospital Militar Universitario Dr. Carlos Arvelo,Garati Cova,24,25132946,,La Guaira,PNA
-398,Hospital Militar Universitario Dr. Carlos Arvelo,Brice�o Mar�a,90,1445299,,La Guaira,AFILIADO
-399,Hospital Militar Universitario Dr. Carlos Arvelo,Legorburu Juan Andr�s,58,6914851,,Los Palos Grandes,PNA
-400,Hospital Militar Universitario Dr. Carlos Arvelo,Anchundia Isaac,81,2199218,,Para�so,AFILIADO
+398,Hospital Militar Universitario Dr. Carlos Arvelo,Brice�o Mar�a,90,1445299,,La Guaira,AFILIADO
+399,Hospital Militar Universitario Dr. Carlos Arvelo,Legorburu Juan Andr�s,58,6914851,,Los Palos Grandes,PNA
+400,Hospital Militar Universitario Dr. Carlos Arvelo,Anchundia Isaac,81,2199218,,Para�so,AFILIADO
 401,Hospital Militar Universitario Dr. Carlos Arvelo,Pericaguan Milba,49,13375459,,San Martin,PNA
 402,Hospital Militar Universitario Dr. Carlos Arvelo,Blanco Milquiades,46,15147810,,La Guaira,PNA
 403,Hospital Militar Universitario Dr. Carlos Arvelo,Quao Suylin,40,16135135,,La Guaira,PNA
 404,Hospital Militar Universitario Dr. Carlos Arvelo,Castillo Alba,42,15947646,,San Martin,PNA
-405,Hospital Militar Universitario Dr. Carlos Arvelo,Mari�o Castello,35,31289457,,La Pastora,Hijo Cnel. (F)
+405,Hospital Militar Universitario Dr. Carlos Arvelo,Mari�o Castello,35,31289457,,La Pastora,Hijo Cnel. (F)
 406,Hospital Militar Universitario Dr. Carlos Arvelo,Marcano Suse,33,25612616,,Catia,PNA
 407,Hospital Militar Universitario Dr. Carlos Arvelo,Marcano Odalis,57,10581191,,La Guaira,PNA
-408,Hospital Militar Universitario Dr. Carlos Arvelo,P�rez Infantes,18,33218435,,La Guaira,PNA
+408,Hospital Militar Universitario Dr. Carlos Arvelo,P�rez Infantes,18,33218435,,La Guaira,PNA
 409,Hospital Militar Universitario Dr. Carlos Arvelo,Hetty Sam,37,16769990,,La Guaira,Tte. Fragoza
 410,Hospital Militar Universitario Dr. Carlos Arvelo,Garazo Andrea,34,19445453,,La Guaira,PNA
-411,Hospital Militar Universitario Dr. Carlos Arvelo,Gonz�lez Ahimar,56,6270109,,Caracas,PNA
+411,Hospital Militar Universitario Dr. Carlos Arvelo,Gonz�lez Ahimar,56,6270109,,Caracas,PNA
 412,Hospital Militar Universitario Dr. Carlos Arvelo,Olivero Ana,72,4281217,,La Guaira,PNA
 413,Hospital Militar Universitario Dr. Carlos Arvelo,Ramos Joselina Alvarado,61,6916206,,La Guaira,GNB Cnel.
 414,Hospital Militar Universitario Dr. Carlos Arvelo,Ismael Rumanca Torres,23,31312002,,La Guaira,S/Of. Seg.
 415,Hospital Militar Universitario Dr. Carlos Arvelo,Nelda Bello,47,11015849,,San Martin,PNA
 416,Hospital Militar Universitario Dr. Carlos Arvelo,Monsalve Kiana,47,13466342,,San Martin,PNA
-417,Hospital Militar Universitario Dr. Carlos Arvelo,Salas Yilseya,57,9999170,,Para�so,Esposa S/M
+417,Hospital Militar Universitario Dr. Carlos Arvelo,Salas Yilseya,57,9999170,,Para�so,Esposa S/M
 418,Hospital Militar Universitario Dr. Carlos Arvelo,Laya Yosil,45,15034147,,Urdaneta,Enferm. Hosp.
 419,Hospital Militar Universitario Dr. Carlos Arvelo,Salazar Carlos,28,27178947,,Penal,PT
 420,Hospital Militar Universitario Dr. Carlos Arvelo,Vargas Nancy,47,5323419,,San Martin,PNA
 421,Hospital Militar Universitario Dr. Carlos Arvelo,Moreno Yulitza,34,,,Artigas,PNA
 422,Hospital Militar Universitario Dr. Carlos Arvelo,Salazar Yajaira,44,15160619,,Delicias,PNA
-423,Hospital Militar Universitario Dr. Carlos Arvelo,Acosta �mber,19,31950088,,San Juan,PNA
-424,Hospital Militar Universitario Dr. Carlos Arvelo,Dur�n Jos�,59,10549929,,Artigas,PNA
-425,Hospital Militar Universitario Dr. Carlos Arvelo,Fern�ndez Lilia,42,16598007,,La Guaira,PNA
+423,Hospital Militar Universitario Dr. Carlos Arvelo,Acosta �mber,19,31950088,,San Juan,PNA
+424,Hospital Militar Universitario Dr. Carlos Arvelo,Dur�n Jos�,59,10549929,,Artigas,PNA
+425,Hospital Militar Universitario Dr. Carlos Arvelo,Fern�ndez Lilia,42,16598007,,La Guaira,PNA
 426,Hospital Militar Universitario Dr. Carlos Arvelo,Stefani Villegas,25,28453309,,La Guaira,PNA
-427,Hospital Militar Universitario Dr. Carlos Arvelo,�lvarez Anderson,29,17755833,,San Juan,PNA
-428,Hospital Militar Universitario Dr. Carlos Arvelo,Pi�ero D�az Oukli (Fallecido),23,29910706,,La Guaira (Fallecido),PNA
-429,Hospital Militar Universitario Dr. Carlos Arvelo,Marcano Gonz�lez Mara,16,33010536,,La Guaira,PNA
-430,Hospital Militar Universitario Dr. Carlos Arvelo,Hamer Morles �lvarez,16,32922380,,La Guaira,PNA
+427,Hospital Militar Universitario Dr. Carlos Arvelo,�lvarez Anderson,29,17755833,,San Juan,PNA
+428,Hospital Militar Universitario Dr. Carlos Arvelo,Pi�ero D�az Oukli (Fallecido),23,29910706,,La Guaira (Fallecido),PNA
+429,Hospital Militar Universitario Dr. Carlos Arvelo,Marcano Gonz�lez Mara,16,33010536,,La Guaira,PNA
+430,Hospital Militar Universitario Dr. Carlos Arvelo,Hamer Morles �lvarez,16,32922380,,La Guaira,PNA
 431,Hospital Militar Universitario Dr. Carlos Arvelo,Carvajal Jon,41,17982017,,La Guaira,PNA
 432,Hospital Militar Universitario Dr. Carlos Arvelo,Jusmary Tovar,37,19272179,,La Guaira,PNA
 433,Hospital Militar Universitario Dr. Carlos Arvelo,Luis Martinez,49,10683348,,La Guaira,PNA
-434,Hospital Militar Universitario Dr. Carlos Arvelo,Giovanny L�pez,47,15625037,,La Guaira,PNA
+434,Hospital Militar Universitario Dr. Carlos Arvelo,Giovanny L�pez,47,15625037,,La Guaira,PNA
 435,Hospital Militar Universitario Dr. Carlos Arvelo,Torrellas Maria,29,29656134,,La Guaira,PNA
 436,Hospital Militar Universitario Dr. Carlos Arvelo,Ortega Belde,67,5827267,,La Guaira,PNA
-437,Hospital Militar Universitario Dr. Carlos Arvelo,Gonz�lez Ahimar,56,,,,
+437,Hospital Militar Universitario Dr. Carlos Arvelo,Gonz�lez Ahimar,56,,,,
 438,Hospital Militar Universitario Dr. Carlos Arvelo,Palmer Darliman,26,27956623,,La Guaira,PNA
 439,Hospital Militar Universitario Dr. Carlos Arvelo,Rodriguez Luis,31,24802937,,La Guaira,PNA
-440,Hospital Militar Universitario Dr. Carlos Arvelo,Paola Gonz�lez,27,27042446,,La Guaira,S/A
+440,Hospital Militar Universitario Dr. Carlos Arvelo,Paola Gonz�lez,27,27042446,,La Guaira,S/A
 441,Hospital Militar Universitario Dr. Carlos Arvelo,Ramos Mayerling,41,15780524,,La Guaira,PNA
 442,Hospital Militar Universitario Dr. Carlos Arvelo,Luis Martinez,49,6683348,,Casalta 3,S/M GNB
 443,Hospital Militar Universitario Dr. Carlos Arvelo,Arias Fructuoso,65,6156642,,PNA,GNB
 444,Hospital Militar Universitario Dr. Carlos Arvelo,Belde Ortega,67,5827267,,La Guaira,PNA
 445,Hospital Militar Universitario Dr. Carlos Arvelo,Mayerling Ramos,41,15780524,,La Guaira,PNA
 446,Hospital Militar Universitario Dr. Carlos Arvelo,Yoselyn Guerra,59,6502264,,La Guaira,PNA
-447,Hospital Militar Universitario Dr. Carlos Arvelo,Lourdes Jim�nez,59,8654412,,Fuerte Tiuna,Madre C.C.
+447,Hospital Militar Universitario Dr. Carlos Arvelo,Lourdes Jim�nez,59,8654412,,Fuerte Tiuna,Madre C.C.
 448,Hospital Militar Universitario Dr. Carlos Arvelo,Yakelin Santana,56,10398248,,Los Corales,PNA
-449,Hospital Militar Universitario Dr. Carlos Arvelo,Gonz�lez Mart�nez Mar�a Cristina,55,11192760,,La Guaira,PNA
-450,Hospital Militar Universitario Dr. Carlos Arvelo,L�pez Morales C�sar,30,23622267,,Comandancia GNB,Tte. GNB
-451,Hospital Militar Universitario Dr. Carlos Arvelo,Noguera Ar�ngel,19,31752473,,Macuto La Guaira,S/2 GNB
+449,Hospital Militar Universitario Dr. Carlos Arvelo,Gonz�lez Mart�nez Mar�a Cristina,55,11192760,,La Guaira,PNA
+450,Hospital Militar Universitario Dr. Carlos Arvelo,L�pez Morales C�sar,30,23622267,,Comandancia GNB,Tte. GNB
+451,Hospital Militar Universitario Dr. Carlos Arvelo,Noguera Ar�ngel,19,31752473,,Macuto La Guaira,S/2 GNB
 452,Hospital Militar Universitario Dr. Carlos Arvelo,Rangel Dephne,23,29619923,,Macuto La Guaira,S/2 GNB
 453,Hospital Militar Universitario Dr. Carlos Arvelo,Mariany Salazar,19,32454171,,Macuto La Guaira,S/2 GNB
-454,Hospital Militar Universitario Dr. Carlos Arvelo,Franklin P�rez Guanche,42,17160400,,La Guaira,PNA
-455,Hospital Militar Universitario Dr. Carlos Arvelo,G�nesis Silva,30,25874216,,La Guaira,PNA
+454,Hospital Militar Universitario Dr. Carlos Arvelo,Franklin P�rez Guanche,42,17160400,,La Guaira,PNA
+455,Hospital Militar Universitario Dr. Carlos Arvelo,G�nesis Silva,30,25874216,,La Guaira,PNA
 456,Hospital Militar Universitario Dr. Carlos Arvelo,Danieli Carelis Garcia,30,,,La Guaira,PNA
 457,Hospital Militar Universitario Dr. Carlos Arvelo,Osorio Elvia,33,24153416,,Macuto La Guaira,S/M3 GNB
-458,Hospital Militar Universitario Dr. Carlos Arvelo,El�as Melo,33,20888810,,La Guaira,PNA
+458,Hospital Militar Universitario Dr. Carlos Arvelo,El�as Melo,33,20888810,,La Guaira,PNA
 459,Hospital Militar Universitario Dr. Carlos Arvelo,Maite Coa,48,11165265,,La Guaira,PNA
 460,Hospital Militar Universitario Dr. Carlos Arvelo,Elvis Etolino,19,32335642,,La Guaira,PNA
-461,Hospital Militar Universitario Dr. Carlos Arvelo,Sergio P�rez,15,32635244,,La Guaira,PNA
-462,Hospital Militar Universitario Dr. Carlos Arvelo,Flori�n Cede�o Alberto,28,26898085,,Guarenas,S/M3
+461,Hospital Militar Universitario Dr. Carlos Arvelo,Sergio P�rez,15,32635244,,La Guaira,PNA
+462,Hospital Militar Universitario Dr. Carlos Arvelo,Flori�n Cede�o Alberto,28,26898085,,Guarenas,S/M3
 463,Hospital Militar Universitario Dr. Carlos Arvelo,Yan Iduara,18,32106240,,La Guaira,PNA
 464,Hospital Militar Universitario Dr. Carlos Arvelo,Yoselyn Guerra,19,31752478,,La Guaira,S/2 GNB
+465,Hospital Domingo Luciani,SALAMANCA ALEXANDER,50,,,,
+466,Hospital Domingo Luciani,CARMEN MIRABAL,71,,,,
+467,Hospital Domingo Luciani,MARMOLE AMANDA,76,,,,
+468,Hospital Domingo Luciani,PRADO ZAIDA,57,,,,
+469,Hospital Domingo Luciani,SERRANO JULIO,22,,,,
+470,Hospital Domingo Luciani,SIERRA DARWIN,,,,,
+471,Hospital Domingo Luciani,GUERRA ELI,50,,,,
+472,Hospital Domingo Luciani,GIBELA MORELA,50,,,,
+473,Hospital Domingo Luciani,FERNANDEZ NEISY,38,,,,
+474,Hospital Domingo Luciani,MARQUEZ FREDDY,22,,,,
+475,Hospital Domingo Luciani,LUNA JENNIFER,36,,,,
+476,Hospital Domingo Luciani,MARÍA LUIS,67,,,,
+477,Hospital Domingo Luciani,SOSA DANNY,53,,,,
+478,Hospital Domingo Luciani,NIVAS LUIS,37,,,,
+479,Hospital Domingo Luciani,ORTEGA VILMA,,6240335,,,
+480,Hospital Domingo Luciani,SANTANA MAILENI,,4559403,,,
+481,Hospital Domingo Luciani,LEÓN GAHEL,2,,,,
+482,Hospital Domingo Luciani,OBREGÓN DIEGO,15,,,,
+483,Hospital Domingo Luciani,PRADA VÍCTOR,64,,,,
+484,Hospital Domingo Luciani,LANDY SEBASTIÁN,,,,,
+485,Hospital Domingo Luciani,RODRIGUEZ LUIS,,,,,
+486,Hospital Domingo Luciani,CAMPOS JEAN,48,,,,
+487,Hospital Domingo Luciani,MARCHENA ABRAHAM,2,,,,
+488,Hospital Domingo Luciani,JEAN CAMPOS,48,,,,
+489,Hospital Domingo Luciani,ABRAHAN MARCHENA,46,,,,
+490,Hospital Domingo Luciani,IRVIN GOJO,37,,,,
+491,Hospital Domingo Luciani,YORBIS ESPINOZA,40,,,,
+492,Hospital Domingo Luciani,CARMEN MENDOZA,48,,,LA GUAIRA,
+493,Hospital Domingo Luciani,FABIANA RIVAS,23,,,LA GUAIRA,
+494,Hospital Domingo Luciani,JOSÃ‰ CAVITE,46,,,CARICUAO,
+495,Hospital Domingo Luciani,OMAR PADILLA,64,,,BARUTA,
+496,Hospital Domingo Luciani,CARLOS PEREIRA,85,,,BARUTA,
+497,Hospital Domingo Luciani,CESAR HIDALGO,66,,,PETARE,
+498,Hospital Domingo Luciani,IBER BLANCO,18,,,COLEGIO DE ING.,
+499,Hospital Domingo Luciani,JESUS GONZALES,71,,,PROPATRIA,
+500,Hospital Domingo Luciani,RAFAEL FLORES,48,,,MARICHE,
+501,Hospital Domingo Luciani,CRISTIAN TOVAR,26,,,LA VICTORIA,
+502,Hospital Domingo Luciani,JOSÃ‰ MENDOZA,63,,,BARUTA,
+503,Hospital Domingo Luciani,JOSÃ‰ RAMIREZ,37,,,LA GUAIRA,
+504,Hospital Domingo Luciani,RANDY CENTENO,34,,,LA CALIFORNIA,
+505,Hospital Domingo Luciani,ALÃ CHACON,,,,,
+506,Hospital Domingo Luciani,DORIS ARRIETA,65,,,BARUTA,
+507,Hospital Domingo Luciani,HELLEN SALAZAR,23,,,LA GUAIRA,
+508,Hospital Domingo Luciani,YELI MEDINA,34,,,LA GUAIRA,
+509,Hospital Domingo Luciani,AMADOR RANGEL,54,,,,
+510,Hospital Domingo Luciani,ANGELY DIAZ,22,,,LA GUAIRA,
+511,Hospital Domingo Luciani,ISABEL VEGAS,50,,,LA GUAIRA,
+512,Hospital Domingo Luciani,YUSKEIDY HERNANDEZ,35,,,LA GUAIRA,
+513,Hospital Domingo Luciani,ARIANA MARRUFO,37,,,LA GUAIRA,
+514,Hospital Domingo Luciani,GISBELY MORENO,,,,,
+515,Hospital Domingo Luciani,LARRY ESCOBAR,31,,,LA GUAIRA,
+516,Hospital Domingo Luciani,ASTRID MENDEZ,38,,,LA GUAIRA,
+517,Hospital Domingo Luciani,GLADYS VASQUEZ,72,,,LA GUAIRA,
+518,Hospital Domingo Luciani,HARRY ERAZO,21,,,LA GUAIRA,
+519,Hospital Domingo Luciani,ANTONIO PARADA,78,,,,
+520,Hospital Domingo Luciani,ADOLFO SANCHEZ,35,,,LA GUAIRA,
+521,Hospital Domingo Luciani,PAENYI PEREZ,14,,,LA GUAIRA,
+522,Hospital Domingo Luciani,WILLIAM LOPEZ,28,,,LA GUAIRA,
+523,Hospital Domingo Luciani,DOUGLAS PADRON,20,,,OCUMARE,
+524,Hospital Domingo Luciani,JESSICA BLANCO,53,,,LA GUAIRA,
+525,Hospital Domingo Luciani,VICTORIA CARIDAD,29,,,LA GUAIRA,
+526,Hospital Domingo Luciani,CAMILA ARELLANO,17,,,LA GUAIRA,
+527,Hospital Domingo Luciani,JENNCEL REY,29,,,LOS PALOS GRANDES,
+528,Hospital Domingo Luciani,GLADIUSKA HERRERA,25,,,SAN BLAS,
+529,Hospital Domingo Luciani,NORKIS BENCOMO,27,,,LA GUAIRA,
+530,Hospital Domingo Luciani,NANCY SERRANO,67,,,LA GUAIRA,
+531,Hospital Domingo Luciani,BRANYERLI CARABALLO,24,,,JUNQUITO,
+532,Hospital Domingo Luciani,ALBERTO FUENTES,52,,,CARPINTERO,
+533,Hospital Domingo Luciani,OMAR PORTILLO,40,,,LA GUAIRA,
+534,Hospital Domingo Luciani,RENÃ‰ SUAREZ,62,,,LA GUAIRA,
+535,Hospital Domingo Luciani,BRAYAN DA CONSEICAO,34,,,LA GUAIRA,
+536,Hospital Domingo Luciani,MIEL FRONTADO,70,,,,
+537,Hospital Domingo Luciani,YENDER ESPINOZA,2 meses,,,,
+538,Hospital Domingo Luciani,YENDERLI CABARCA,13,,,,
+539,Hospital Domingo Luciani,VELASQUEZ LIDICE,12,,,,
+540,Hospital Domingo Luciani,CAMILO MORENO,1 aÃ±o,,,,
+541,Hospital Domingo Luciani,SANTIAGO JIMENEZ,12,,,,
+542,Hospital Domingo Luciani,DÃAZ DIEGO,9 meses,,,,
+543,Hospital Domingo Luciani,ZOE HIGUERA,2 meses,,,,
+544,Hospital Domingo Luciani,ALEXA GONCALVEZ,5 meses,,,,
+545,Hospital Domingo Luciani,YEIDER ESPINOZA,2 meses,,,,
+546,Hospital Domingo Luciani,AXEL JIMY,4,,,,
+547,Hospital Domingo Luciani,EITHAN GUTIERREZ,3 meses,,,,
+548,Hospital Domingo Luciani,BRAYAN GARCIA,8,,,,
+549,Hospital Domingo Luciani,VALERIA ARVELO,6,,,,
+550,Hospital Domingo Luciani,VALERI GONZALEZ,10,,,,
+551,Hospital Domingo Luciani,FRANDER RADA,3,,,,
+552,Hospital Domingo Luciani,ROSMARY BLANCO,7,,,,
+553,Hospital Domingo Luciani,ANA GIDER,4,,,,
+554,Hospital Domingo Luciani,LEWIS DESMON,10,,,,
+555,Hospital Domingo Luciani,GAEL PAREDES,6,,,,
+556,Hospital Domingo Luciani,JOALBIS SILVA,7,,,,
+557,Hospital Domingo Luciani,LEXIMAR CASERO,1 aÃ±o,,,,
+558,Hospital Domingo Luciani,LELICET VELASQUEZ,12,,,,
+559,Hospital Domingo Luciani,ANA RIBAS,7,,,ARAGUANEY,
+560,Hospital Domingo Luciani,WILBELYS AGUIAR,9,,,MESUCA,
+561,Hospital Domingo Luciani,SANTIAGO MARTÃNEZ,8,,,5 DE JULIO,
+562,Hospital Domingo Luciani,AMANDA MONTILLA,3,,,CÃšA,
+563,Hospital Domingo Luciani,LEONARDO PARABAO,7,,,ANDRÃ‰S BELLO,
+564,Hospital Domingo Luciani,ALAN QUINTANA,12,,,,
+565,Hospital Domingo Luciani,ALEJANDRO CAMILO,,,,CATIA,
+566,Hospital Domingo Luciani,DENNIS RUIZ,41,,,LA GUAIRA,
+567,Hospital Domingo Luciani,JOANGERLYS URREOLA,10,,,,
+568,Hospital Domingo Luciani,GABRIELA PARRA,15,,,EL VALLE,
+569,Hospital Domingo Luciani,MATHIAS NIABUENO,9,,,EL VALLE,
+570,Hospital Domingo Luciani,ARAN ARCARDI,10,,,LA GUAIRA,
+571,Hospital Domingo Luciani,ISAAC MARTINEZ,20,,,LA GUAIRA,
+572,Hospital Domingo Luciani,JESUS MARTINEZ,7,,,LA GUAIRA,
+573,Hospital Domingo Luciani,OSCAR VILLAFAÃ‘E,66,,,,
+574,Hospital Domingo Luciani,EDUARDO TESTA,37,,,,
+575,Hospital Domingo Luciani,JONATHAN GIL,44,,,,
+576,Hospital Domingo Luciani,GUSTAVO BLANCO,41,,,,
+577,Hospital Domingo Luciani,ULICES CRESPO,53,,,,
+578,Hospital Domingo Luciani,HENRY LEÃ“N,39,,,,
+579,Hospital Domingo Luciani,VILMA GARCÃA,62,,,,
+580,Hospital Domingo Luciani,SUGEIDLIS PADRON,42,,,,
+581,Hospital Domingo Luciani,TERESA AGUAJE,73,,,,
+582,Hospital Domingo Luciani,GABRIELA VELIZ,26,,,,
+583,Hospital Domingo Luciani,EUGENIO HERNANDEZ,,,,,
+584,Hospital Domingo Luciani,CRISTIAN GIL,30,,,,
+585,Hospital Domingo Luciani,KEILER APONTE,25,,,,
+586,Hospital Domingo Luciani,ISMAEL DIAZ,65,,,,
+587,Hospital Domingo Luciani,JORGE ROSAS,38,,,,
+588,Hospital Domingo Luciani,RICARDO BARRETO,42,,,LA GUAIRA,
+589,Hospital Domingo Luciani,ANTONY VALDINO,25,,,,
+590,Hospital Domingo Luciani,ANGEL YANEZ,34,,,,
+591,Hospital Domingo Luciani,PEDRO LIZCANO,40,,,,
+592,Hospital Domingo Luciani,ELIAN TRUJILLO,19,,,,
+593,Hospital Domingo Luciani,CARLOS RAMIREZ,35,,,,
+594,Hospital Domingo Luciani,EMELY FERNANDEZ,26,,,,
+595,Hospital Domingo Luciani,ERIKA FLORES,34,,,,
+596,Hospital Domingo Luciani,ARTURO SALAZAR,13,,,,
+597,Hospital Domingo Luciani,JESUS RODRIGUEZ,28,,,,
+598,Hospital Domingo Luciani,SAMIRA VALLENILLA,68,,,,
+599,Clínica El Ávila,ALEJANDRO TOVAR,26,,,,POLITRAUMATISMO
+600,Clínica El Ávila,ALEJANDRO MORILLO,22,,,,SX COMPARTIMENTAL 
+601,Clínica El Ávila,ANA LALONGO,86,,,,
+602,Clínica El Ávila,ARNOLDO TERAN,36,19610169,,,TX POLITRAUMATISMO LEVES
+603,Clínica El Ávila,BÃRBARA MORILLO,16,,,,
+604,Clínica El Ávila,BRUNO ROMERO,87,,,,
+605,Clínica El Ávila,CARLI DAMATA,20,28458908,,,DOLOR CADERA LUMB. / OTITIS EXTERNA
+606,Clínica El Ávila,CARLOS SALAZAR,64,6488550,,,
+607,Clínica El Ávila,CECILIA SURECK,79,9963484,,,TRAUMATISMO CONTUNDIDO
+608,Clínica El Ávila,CIM BERK ARISOY,33,,,,TX MUSCULOESQUELÃ‰TICO
+609,Clínica El Ávila,DIEGO DÃAZ,20,31255574,,,POLITRAUMATISMO
+610,Clínica El Ávila,DONATO ENRO,70,4565942,,,
+611,Clínica El Ávila,DORYS ZORRILLO,38,,,,
+612,Clínica El Ávila,ELIAS BALADÃN,62,6480632,,,ESCORIACIONES
+613,Clínica El Ávila,ENRIQUE GIL,42,16032740,,,HERIDA LABIO SUPERIOR
+614,Clínica El Ávila,ERIK MONTEREY SANTO,52,,,,HTA, ANSIEDAD
+615,Clínica El Ávila,FRENESI BEMÃTEZ,31,,,,
+616,Clínica El Ávila,FURGENCIA MILLÃN,58,,,,TX MUSCULOESQUELÃ‰TICO
+617,Clínica El Ávila,GABRIEL GONZÃLEZ,82,,,,ESGUINCE TOBILLO IZQUIERDO
+618,Clínica El Ávila,GIBER JASPE,63,6440419,,,
+619,Clínica El Ávila,GRACIELA ZERPA,88,,,,TX MUSCULOESQUELÃ‰TICO
+620,Clínica El Ávila,GRECIA GONZÃLEZ,36,,,,
+621,Clínica El Ávila,GREISLY LOVERA,37,18910500,,,FX COSTAL, POLIT
+622,Clínica El Ávila,GREISY GONZÃLEZ,20,,,,POLIT
+623,Clínica El Ávila,HAIDE RIVAS,78,2958321,,,TX CABEZA
+624,Clínica El Ávila,HAMPING FENG,35,83812553,,,POLIT
+625,Clínica El Ávila,HASEM SALAH,62,,,,TX CRANEOENCEFÃLICO / HERIDA
+626,Clínica El Ávila,JAVIER SUÃREZ,53,11690335,,,POLT PGB
+627,Clínica El Ávila,JESUS ARTURO NUÃ‘EZ,71,4356767,,,MAREO, NÃUSEAS, LOSARTÃN
+628,Clínica El Ávila,JOHANI AGUILAR,43,,,,
+629,Clínica El Ávila,JOSE LUIS COSTA,â€”,,,,FX ASTRÃGALO
+630,Clínica El Ávila,JUAN RODRÃGUEZ,16,,,,
+631,Clínica El Ávila,JUAN PACHECO,50,13374571,,,TX RODILLA DERECHA
+632,Clínica El Ávila,JUAN CARLOS GONZÃLEZ,â€”,,,,FC TOBILLO â€“ Dr. BriceÃ±o
+633,Clínica El Ávila,JUAN CARLOS DAMASCO,57,10114024,,,TX CRANEOENCEFÃLICO
+634,Clínica El Ávila,JUAN MIGUEL GONZÃLEZ,10,,,,TX MUSCULOESQUELÃ‰TICO
+635,Clínica El Ávila,JUCHI FENG,53,,,,
+636,Clínica El Ávila,KARIN AGUILAR,65,6123953,,,POLIT, INESTABILIDAD HEMODINÃMICA
+637,Clínica El Ávila,LALONGO DE BASILIO,87,81A181,,,
+638,Clínica El Ávila,LAURA MARQUINA,42,17323315,,,POLITRAUMATISMO
+639,Clínica El Ávila,LEANDRO GONZÃLEZ,28,27027480,,,
+640,Clínica El Ávila,LUILAN FUNG,62,51603379,,,IQ PIE IZQ
+641,Clínica El Ávila,LUZ HERNÃNDEZ,54,6338662,,,
+642,Clínica El Ávila,MARBELIS GINO,28,,,,
+643,Clínica El Ávila,MARÃA ALEJANDRA RODRIGUEZ,45,,,,TX MUSCULOESQUELÃ‰TICO
+644,Clínica El Ávila,MARÃA ALEJANDRA JANES,70,11234099,,,TX RODILLA IZQUIERDA
+645,Clínica El Ávila,MARÃA FERNANDA PRADO,15,34055623,,,FX ESTERNAL-COSTAL
+646,Clínica El Ávila,MARIALY MARCANO,58,6498112,,,TX MANO IZQUIERDA
+647,Clínica El Ávila,MARIBEL AGUILERA,32,,,,HERIDA FACIAL
+648,Clínica El Ávila,MARTA NOVA,63,,,,RX TOBILLO IZQUIERDO
+649,Clínica El Ávila,MIGUEL RODRÃGUEZ,38,,,,TX MUSCULOESQUELÃ‰TICO
+650,Clínica El Ávila,MORAIMA GONZÃLEZ,65,,,,TX MUSCULOESQUELÃ‰TICO
+651,Clínica El Ávila,NICOLLETE NUOVO,77,,,,FRACTURA PELVIS
+652,Clínica El Ávila,OENIA ACOSTA,60,6889138,,,TX LÃ“BULO IZQUIERDO, TRAUMATISMO
+653,Clínica El Ávila,PABLO GONZÃLEZ,88,1868258,,,TEC
+654,Clínica El Ávila,REINA BAUTISTA,70,5090093,,,POLIT
+655,Clínica El Ávila,RICARDO BODUL,63,,,,
+656,Clínica El Ávila,RICARDO GONZÃLEZ,78,3152093,,,TX TOBILLO IZQUIERDO
+657,Clínica El Ávila,RINA GAMEZS,50,13290236,,,TX MI DE CRISTAL (difÃ­cil de leer)
+658,Clínica El Ávila,ROBERT REYES,47,13680249,,,POLIT
+659,Clínica El Ávila,ROSALINDA FERNÃNDEZ,28,,,,TX MUSCULOESQUELÃ‰TICO
+660,Clínica El Ávila,SOFÃA BOLGNESE,20,,,,POLIT/HEMOTÃ“RAX DERECHO / TX ABD CERRADO
+661,Clínica El Ávila,SOFÃA GONZÃLEZ,8,,,,TX MUSCULOESQUELÃ‰TICO
+662,Clínica El Ávila,SONIA FENG,20,,,,
+663,Clínica El Ávila,VANESA MERO,30,,,,TX MUSCULOESQUELÃ‰TICO
+664,Clínica El Ávila,VICTORIA DELGADO,19,,,,
+665,Clínica El Ávila,YANOSKI UZCÃTEGUI,67,5572078,,,TX EN MI
+666,Clínica El Ávila,YOANI GONZÃLEZ,58,,,,POLIT
+667,Clínica El Ávila,YURIMAN MILLAN,29,,,,TX MUSCULOESQUELÃ‰TICO
+668,Hospital de Catia,Abdaly Villamizar,28,,26254624,La Guaira: Caribe,
+669,Hospital de Catia,Alexandra Chirinos,21,,31995517,La Guaira:Carlos Julio,
+670,Hospital de Catia,Carmen Marin,53,,,,
+671,Hospital de Catia,Dagner Salazar,,,,,
+672,Hospital de Catia,Dilcia Lemus,49,,13531664,,
+673,Hospital de Catia,Ivan Mendieta,65,,23184816,,
+674,Hospital de Catia,Jesús Moreno,44,,15475428,,
+675,Hospital de Catia,Luz Agudelo,75,,22229186,,
+676,Hospital de Catia,Marlene Bonilla,74,,4582511,,
+677,Hospital de Catia,Miguel Serrano,11,,,,
+678,Hospital de Catia,Tania Terán,55,,11409997,La Guaira: av Principal,
+679,Hospital de Catia,Yurmis Gonzalez,47,,13828545,,
+680,Hospital de Catia,Abdaly Isgleidy Villamizar Lovera,28,,26254624,,
+681,Hospital de Catia,Aldo Chacin,54,,,,
+682,Hospital de Catia,Alexander Chirinos,21,,,,
+683,Hospital de Catia,Alexandra Chiquinquira Chirinos Quintero,21,,31995517,,
+684,Hospital de Catia,Alexis Zacaria,51,,,,
+685,Hospital de Catia,Alfredo Muñoz,62,,,,
+686,Hospital de Catia,Alfredo Prado,66,,6057382,,
+687,Hospital de Catia,Álvaro  Fabias,56,,9960614,Caracas: Sabana Grande,
+688,Hospital de Catia,Amarili Blanco,67,,,,
+689,Hospital de Catia,Amarilis Franco,68,,5452987,,
+690,Hospital de Catia,Amarilys Franco,68,,5452987,,
+691,Hospital de Catia,Ana Abreu,36,,22636301,Caracas: catia,
+692,Hospital de Catia,Ana Briceño,72,,4820338,,
+693,Hospital de Catia,Ana Gonzalez,46,,,,
+694,Hospital de Catia,Ana Isabel Abreu Salcedo,36,,22036701,,
+695,Hospital de Catia,Ana María Briceño,72,,4820338,,
+696,Hospital de Catia,Anais Hernandez,55,,10481429,,
+697,Hospital de Catia,Antonio Portales,59,,10274036,,
+698,Hospital de Catia,Antonio Portalis,59,,10279036,,
+699,Hospital de Catia,Anyisnay Ereu,23,,,,
+700,Hospital de Catia,Aranza Hernandez,11,,,,
+701,Hospital de Catia,Ashley Lopez,5,,,La Guaira: Caribe,
+702,Hospital de Catia,Audia Teran,54,,,,
+703,Hospital de Catia,Avdali Villamizar,28,,26254694,,
+704,Hospital de Catia,Benito Plana,52,,,,
+705,Hospital de Catia,Bertma Laguna,,,,,
+706,Hospital de Catia,Carla Leen,49,,17700355,La Guaira,
+707,Hospital de Catia,Carla León,49,,12700355,,
+708,Hospital de Catia,Carla Nacaryd León Arevalo,49,,12700355,,
+709,Hospital de Catia,Carlos Mato,26,,,,
+710,Hospital de Catia,Celestino Cid,38,,18529053,,
+711,Hospital de Catia,Daner Salazar,50,,11557611,Caracas: Catia,
+712,Hospital de Catia,Dario Reubén,64,,,,
+713,Hospital de Catia,David Melivier,24,,30605566,,
+714,Hospital de Catia,Deivi Rodriguez,19,,,,
+715,Hospital de Catia,Derek Torres,17,,,,
+716,Hospital de Catia,Dilcia Lourdes Lemus de Guerra,49,,13531664,,
+717,Hospital de Catia,Dilia Lemos,49,,13531669,Caracas: la silsa,
+718,Hospital de Catia,Dilsia Lemus,49,,,,
+719,Hospital de Catia,Edgar Gonzalez,48,,,,
+720,Hospital de Catia,Edgar Ramos,67,,4885254,,
+721,Hospital de Catia,Edgard Ramos,67,,4885254,,
+722,Hospital de Catia,Edith Hernandez,67,,5434579,,
+723,Hospital de Catia,Edith Hernández,67,,5434579,,
+724,Hospital de Catia,Eduanyeli Rivero,6,,,,
+725,Hospital de Catia,Eduanyelis Rivero,6,,,,
+726,Hospital de Catia,Eduyelis Rivero,6,,,,
+727,Hospital de Catia,Edvangely Carboda,6,,,Vía La Guaira,
+728,Hospital de Catia,Emilio Rosales,28,,26247911,,
+729,Hospital de Catia,Ender Rangel,30,,,,
+730,Hospital de Catia,Estefania Soya,14,,,,
+731,Hospital de Catia,Estefania Zaya,14,,,,
+732,Hospital de Catia,Ezequiel Teran,15,,,,
+733,Hospital de Catia,Franklin Alfonzo,65,,,,
+734,Hospital de Catia,Gladys Silva,51,,12752298,,
+735,Hospital de Catia,Gledys Rodriguez,51,,12752298,,
+736,Hospital de Catia,Greisy Oropeza,20,,,,
+737,Hospital de Catia,Guede Colmenares,58,,,,
+738,Hospital de Catia,Gustavo Avila,52,,,,
+739,Hospital de Catia,Gustavo Mayor,52,,11640141,,
+740,Hospital de Catia,Gyotisbel Carrasco,47,,,,
+741,Hospital de Catia,Hilari Mora,13,,,,
+742,Hospital de Catia,Hillali Rodriguez,31,,23710358,,
+743,Hospital de Catia,Irlli Banesa Semería,49,,13571636,,
+744,Hospital de Catia,Irly Cemería,49,,13571636,,
+745,Hospital de Catia,Isabel Abreu,36,,,,
+746,Hospital de Catia,Isabel Garcia,No,,2127624,,
+747,Hospital de Catia,Isabel García,84,,2127624,,
+748,Hospital de Catia,Janeht Seville,49,,,,
+749,Hospital de Catia,Jeison Torres,,,,,
+750,Hospital de Catia,Jesús Alvarado,76,,4248306,,
+751,Hospital de Catia,Jesús Garces,5,,,,
+752,Hospital de Catia,Jesus García,5,,,,
+753,Hospital de Catia,Jesús Orozco,63,,8178191,La Guaira: Sumba,
+754,Hospital de Catia,Jesús Vega,No,,,,
+755,Hospital de Catia,Jesus Vegas,27,,,,
+756,Hospital de Catia,Jesús Vegas,,,,,
+757,Hospital de Catia,Jhon Geccen,42,,,,
+758,Hospital de Catia,Jhonson  Estebes,24,,29571733,La Guaira: Playa Grande,
+759,Hospital de Catia,Joendry Torres,13,,,,
+760,Hospital de Catia,Johnson Estevez,24,,29571733,,
+761,Hospital de Catia,Johnson Stevez Mora,24,,29571733,,
+762,Hospital de Catia,Johnson Stivenson Stevez Mora,24,,29571733,,
+763,Hospital de Catia,José  Planas,52,,12163470,La Guaira: Carayaca,
+764,Hospital de Catia,Jose Agre,49,,,,
+765,Hospital de Catia,Jose Alarcon,47,,13515304,,
+766,Hospital de Catia,Jose Archeta,,,,,
+767,Hospital de Catia,Jose Arvojo,,,,,
+768,Hospital de Catia,Jose Cordero,28,,,,
+769,Hospital de Catia,José De Agrella,48,,13373135,,
+770,Hospital de Catia,José Felix Planas Benitez,52,,12163470,,
+771,Hospital de Catia,José Gabriel De Agrela Mora,48,,13373135,,
+772,Hospital de Catia,José Gomez,45,,3561053,,
+773,Hospital de Catia,Jose Marquez,,,,,
+774,Hospital de Catia,Juan Gil,67,,5972063,,
+775,Hospital de Catia,Karles Leon,49,,,,
+776,Hospital de Catia,Karli Benites,43,,,,
+777,Hospital de Catia,Kenic Nuñez,40,,,,
+778,Hospital de Catia,Kimberly Mora,No,,,,
+779,Hospital de Catia,Leoneidi  Sidira,30,,25175345,La Guaira: tanaguarena,
+780,Hospital de Catia,Leoneidy Silvera,30,,,,
+781,Hospital de Catia,Leoneydi Sivira,30,,25175345,,
+782,Hospital de Catia,Lien Castro,6,,,,
+783,Hospital de Catia,Ligney Carrero,45,,,,
+784,Hospital de Catia,Lismar Quintana,3,,,,
+785,Hospital de Catia,Lopez Neiber,22,,,,
+786,Hospital de Catia,Luisamer Guillen Andrade,17,,31699695,,
+787,Hospital de Catia,Luisangelis Zapata,20,,,,
+788,Hospital de Catia,Luisanyeli Zapata,20,,31962237,,
+789,Hospital de Catia,Madelin Pestana Vargas,35,,,,
+790,Hospital de Catia,Marcel Morales,78,,3998048,,
+791,Hospital de Catia,Marcelo Morales,78,,39980483,,
+792,Hospital de Catia,Mardoly Margareth Pestano Vargas,35,,19915985,,
+793,Hospital de Catia,Margaret Pestano,35,,19915985,La Guaira: Jaivata,
+794,Hospital de Catia,Margareth Peztano,35,,19915985,,
+795,Hospital de Catia,Maria  Yobana,50,,,,
+796,Hospital de Catia,Maria José Gomez,23,,3561053,,
+797,Hospital de Catia,Mariana Guillen,6,,,,
+798,Hospital de Catia,Marlene  Terán,6,,,,
+799,Hospital de Catia,Marloly Pestano,35,,19915985,,
+800,Hospital de Catia,Mary Yepez,30,,,,
+801,Hospital de Catia,Mejia Yanez,40,,,,
+802,Hospital de Catia,Miguel Angel Rodriguez Martínez,56,,10073429,,
+803,Hospital de Catia,Miguel Garces,28,,,,
+804,Hospital de Catia,Miguel Rodriguez,56,,,,
+805,Hospital de Catia,Milagros Linares,45,,,,
+806,Hospital de Catia,Milanger Nieto,18,,,,
+807,Hospital de Catia,Miquel Rodriguez,56,,10073429,,
+808,Hospital de Catia,Nelson Medina,49,,,,
+809,Hospital de Catia,Nianyeli Osmary Nieto Moreno,18,,31962087,,
+810,Hospital de Catia,Nianyelis Nieto,18,,31962087,,
+811,Hospital de Catia,Orlando Delgado,45,,,,
+812,Hospital de Catia,Orlando Gonzalez,72,,,,
+813,Hospital de Catia,Oscar Tortoza,37,,,,
+814,Hospital de Catia,Patricia Mendiola,51,,,,
+815,Hospital de Catia,Pedro Hernandez,82,,2150735,,
+816,Hospital de Catia,Perdomo Yoiner,32,,,,
+817,Hospital de Catia,Petra Piñate,,,,,
+818,Hospital de Catia,Reino Villamizar,,,,,
+819,Hospital de Catia,Rosa Angel Garces,32,,,,
+820,Hospital de Catia,Rosa Angelica Garcés Cid,31,,20604161,,
+821,Hospital de Catia,Rosa Cora,81,,4783466,,
+822,Hospital de Catia,Rosa Garce,31,,20604161,La Guaira: Playa grande,
+823,Hospital de Catia,Rosa Garces,31,,20604161,,
+824,Hospital de Catia,Rosa Garcés,31,,20604161,,
+825,Hospital de Catia,Rosmel Nieves,30,,,,
+826,Hospital de Catia,Ruben Gil,57,,12094132,,
+827,Hospital de Catia,Silvia Nereida Yánez Ochoa,77,,3557870,,
+828,Hospital de Catia,Silvia Yanez,77,,3557870,La Guaira: Carabageda,
+829,Hospital de Catia,Silvia Yánez,77,,3557870,,
+830,Hospital de Catia,Sofía Lopez,15,,,La Guaira: Caribe,
+831,Hospital de Catia,Sorieth Millan,No,,,,
+832,Hospital de Catia,Steban Jhonson,24,,,,
+833,Hospital de Catia,Tania Teran,55,,11409997,,
+834,Hospital de Catia,Tania Teresa Terán Blanco,55,,11409997,,
+835,Hospital de Catia,Teresa Farias,71,,5231792,,
+836,Hospital de Catia,Valella Gorrin,22,,30114918,Caracas: Elatillo,
+837,Hospital de Catia,Valeri Lopez,12,,,La Guaira: Caribe,
+838,Hospital de Catia,Valeri Materan,7,,,,
+839,Hospital de Catia,Valeria Lopez,20,,,,
+840,Hospital de Catia,Valeria Materan,7,,,,
+841,Hospital de Catia,Villamizar Reino,,,,,
+842,Hospital de Catia,William Rubio,57,,6316098,,
+843,Hospital de Catia,Williams Rubio,57,,6316078,,
+844,Hospital de Catia,Yadira Blanco,66,,23944594,,
+845,Hospital de Catia,Yadira Blanco Berrio,66,,23744594,,
+846,Hospital de Catia,Yeison Blanco,17,,,La Guaira: Monte Sano,
+847,Hospital de Catia,Yeleini Chirino,57,,,,
+848,Hospital de Catia,Yeleny Chirino,58,,12389975,,
+849,Hospital de Catia,Yelitza Sarfonia,46,,,,
+850,Hospital de Catia,Yendry Torres,13,,,,
+851,Hospital de Catia,Yenny Gonzales,47,,13828545,La Guaira: Carayaca,
+852,Hospital de Catia,Yenny Pico,54,,,,
+853,Hospital de Catia,Yeritna Cortez,58,,6340991,La Guaira: Caribe,
+854,Hospital de Catia,Yorber Peña,36,,,,
+855,Hospital de Catia,Yorimar Coromoto Cortez,58,,6340991,,
+856,Hospital de Catia,Yorimar Cortéz,58,,6340991,,
+857,Hospital de Catia,Yurbely Martins,6,,,,
+858,Hospital de Catia,Yurimar Cortez ,58,,,,
+859,Hospital de Catia,Yurmis Gonzalez Suarez,47,,13828545,,
+860,Hospital de Catia,Zalazar Caroline,,,,,
+861,Hospital de Catia,Zoriled Millán,,,,,
+862,Hospital de Catia,Zulay Blanco,75,,3818540,,
+863,Hospital Vargas de Caracas,JEAN CAMPOS,48,,,,
+864,Hospital Vargas de Caracas,ABRAHAN MARCHENA,45,,,,
+865,Hospital Vargas de Caracas,IRVIN GOJO,37,,,,
+866,Hospital Vargas de Caracas,YORBIS ESPINOZA,40,,,,
+867,Hospital Vargas de Caracas,CARMEN MENDOZA,48,,,LA GUAIRA,
+868,Hospital Vargas de Caracas,GABRIELA PARRA,15,,,EL VALLE,
+869,Hospital Vargas de Caracas,FABIANA RIVAS,23,,,LA GUAIRA,
+870,Hospital Vargas de Caracas,JOSÉ CAVITE,46,,,CARICUAO,
+871,Hospital Vargas de Caracas,OMAR PADILLA,64,,,BARALT,
+872,Hospital Vargas de Caracas,CARLOS PEREIRA,85,,,BARUTA,
+873,Hospital Vargas de Caracas,CESAR HIDALGO,66,,,PETARE,
+874,Hospital Vargas de Caracas,IBER BLANCO,18,,,COLEGIO DE INGENIEROS,
+875,Hospital Vargas de Caracas,JESUS GONZALES,71,,,PROPATRIA,
+876,Hospital Vargas de Caracas,RAFAEL FLORES,48,,,MARICHE,
+877,Hospital Vargas de Caracas,CRISTIAN TOVAR,26,,,LA VICTORIA,
+878,Hospital Vargas de Caracas,JOSÉ MENDOZA,63,,,BARUTA,
+879,Hospital Vargas de Caracas,JOSÉ RAMIREZ,37,,,LA GUAIRA,
+880,Hospital Vargas de Caracas,RANDY CENTENO,34,,,LA CALIFORNIA,
+881,Hospital Vargas de Caracas,ALÍ CHACÓN,,,,,
+882,Hospital Vargas de Caracas,DORIS ARRIETA,65,,,BARUTA,
+883,Hospital Vargas de Caracas,HELLEN SALAZAR,23,,,LA GUAIRA,
+884,Hospital Vargas de Caracas,YELI MEDINA,34,,,LA GUAIRA,
+885,Hospital Vargas de Caracas,AMADOR RANGEL,54,,,,
+886,Hospital Vargas de Caracas,ANGELY DÍAZ,22,,,LA GUAIRA,
+887,Hospital Vargas de Caracas,ISABEL VEGAS,50,,,LA GUAIRA,
+888,Hospital Vargas de Caracas,YUSKEIDY HERNÁNDEZ,35,,,LA GUAIRA,
+889,Hospital Vargas de Caracas,ARIANA MARRUFO,37,,,LA GUAIRA,
+890,Hospital Vargas de Caracas,GISBELY MORENO,,,,,
+891,Hospital Vargas de Caracas,LARRY ESCOBAR,31,,,LA GUAIRA,
+892,Hospital Vargas de Caracas,ASTRID MÉNDEZ,38,,,LA GUAIRA,
+893,Hospital Vargas de Caracas,GLADYS VÁSQUEZ,72,,,LA GUAIRA,
+894,Hospital Vargas de Caracas,BRAYAN DACONCEICABO,34,,,LA GUAIRA,Tachado
+895,Hospital Vargas de Caracas,MAURICIO AREAZA,74,,,LA GUAIRA,Tachado
+896,Hospital Vargas de Caracas,HARRY ERAZO,21,,,LA GUAIRA,
+897,Hospital Vargas de Caracas,ANTONIO PARADA,78,,,,
+898,Hospital Vargas de Caracas,ADOLFO SÁNCHEZ,35,,,LA GUAIRA,
+899,Hospital Vargas de Caracas,PAENYI PEREZ,14,,,LA GUAIRA,
+900,Hospital Vargas de Caracas,WILLIAM LÓPEZ,28,,,LA GUAIRA,
+901,Hospital Vargas de Caracas,DOUGLAS PADRÓN,20,,,OCUMARE,
+902,Hospital Vargas de Caracas,JESSICA BLANCO,53,,,LA GUAIRA,
+903,Hospital Vargas de Caracas,VICTORIA CARIDAD,29,,,LA GUAIRA,
+904,Hospital Vargas de Caracas,CAMILA ARELLANO,17,,,LA GUAIRA,
+905,Hospital Vargas de Caracas,JENNCEL REY,29,,,LOS PALOS GRANDES,
+906,Hospital Vargas de Caracas,GLADIUSKA HERRERA,25,,,SAN BLAS,
+907,Hospital Vargas de Caracas,NORKIS BENCOMO,27,,,LA GUAIRA,
+908,Hospital Vargas de Caracas,NANCY SERRANO,67,,,LA GUAIRA,
+909,Hospital Vargas de Caracas,BRANYERLI CARABALLO,24,,,EL JUNQUITO,
+910,Hospital Vargas de Caracas,ALBERTO FUENTES,52,,,CARPINTERO,
+911,Hospital Vargas de Caracas,OMAR PORTILLO,40,,,LA GUAIRA,
+912,Hospital Vargas de Caracas,RENÉ SUÁREZ,62,,,LA GUAIRA,
+913,Hospital Vargas de Caracas,BRAYAN DA CONCEICAO,34,,,LA GUAIRA,
+914,Hospital Vargas de Caracas,RAQUEL AMADO,54,,,LA GUAIRA,Tachado
+915,Hospital Vargas de Caracas,DENNIS RUIZ,41,,,LA GUAIRA,
+916,Hospital Vargas de Caracas,JOANGERLYS URREOLA,10,,,,
+917,Hospital Vargas de Caracas,MATTHIOS MIRABUENO,9,,,EL VALLE,
+918,Hospital Vargas de Caracas,ARAN ARCARDI,10,,,LA GUAIRA,
+919,Hospital Vargas de Caracas,ISAAC MARTÍNEZ,20,,,LA GUAIRA,
+920,Hospital Vargas de Caracas,JESÚS MARTÍNEZ,7,,,LA GUAIRA,
+921,Hospital Vargas de Caracas,OSCAR VILLAFAÑE,66,,,,
+922,Hospital Vargas de Caracas,EDUARDO TESTA,37,,,,
+923,Hospital Vargas de Caracas,JONATHAN GIL,44,,,,
+924,Hospital Vargas de Caracas,GUSTAVO BLANCO,41,,,,
+925,Hospital Vargas de Caracas,ULICES CRESPO,53,,,,
+926,Hospital Vargas de Caracas,HENRY LEÓN,39,,,,
+927,Hospital Vargas de Caracas,VILMA GARCÍA,62,,,,
+928,Hospital Vargas de Caracas,SUGEIDIS PADRÓN,42,,,,
+929,Hospital Vargas de Caracas,TERESA AGUAJE,73,,,,
+930,Hospital Vargas de Caracas,GABRIELA VÉLIZ,26,,,,
+931,Hospital Vargas de Caracas,EUGENIO HERNÁNDEZ,,,,,
+932,Hospital Vargas de Caracas,CRISTIAN GIL,30,,,,
+933,Hospital Vargas de Caracas,KEILER APONTE,25,,,,
+934,Hospital Vargas de Caracas,ISMAEL DÍAZ (DRAY),65,,,,
+935,Hospital Vargas de Caracas,JORGE ROSAS,38,,,,
+936,Hospital Vargas de Caracas,RICARDO BARRETO,42,,,LA GUAIRA,
+937,Hospital Vargas de Caracas,ANTONY VALDINO,25,,,,
+938,Hospital Vargas de Caracas,ÁNGEL YÁNEZ,34,,,,
+939,Hospital Vargas de Caracas,PEDRO LIZCANO,40,,,,
+940,Hospital Vargas de Caracas,ELIAN TRUJILLO,19,,,,
+941,Hospital Vargas de Caracas,CARLOS RAMÍREZ,35,,,,
+942,Hospital Vargas de Caracas,EMELY FERNÁNDEZ,26,,,,
+943,Hospital Vargas de Caracas,ERIKA FLORES,34,,,,
+944,Hospital Vargas de Caracas,ARTURO SALAZAR,13,,,,
+945,Hospital Vargas de Caracas,JESÚS RODRÍGUEZ,28,,,,
+946,Hospital Vargas de Caracas,SAMIRA VALLENILLA,68,,,,
+947,Hospital Vargas de Caracas,GAEL PAREDES,6,,,,
+948,Hospital Vargas de Caracas,JOALBIS SILVA,7,,,,
+949,Hospital Vargas de Caracas,LEXIMAR CASERO,1 año,,,,
+950,Hospital Vargas de Caracas,LELICET VELÁSQUEZ,12,,,,
+951,Hospital Vargas de Caracas,ANA RIBAS,7,,,ARAGUANEY,
+952,Hospital Vargas de Caracas,WILBELYS AGUIAR,9,,,MESUCA,
+953,Hospital Vargas de Caracas,SANTIAGO MARTÍNEZ,8,,,5 DE JULIO,
+954,Hospital Vargas de Caracas,AMANDA MONTILLA,3,,,CÚA,
+955,Hospital Vargas de Caracas,LEONARDO PARABA,7,,,ANDRÉS BELLO,
+956,Hospital Vargas de Caracas,ALAN QUINTANA,12,,,,
+957,Hospital Vargas de Caracas,ALEJANDRO CAMILO,,,,CATIA,
+958,Hospital Vargas de Caracas,MIEL FRONTADO,70,,,,
+959,Hospital Vargas de Caracas,YENDER ESPINOZA,2 meses,,,,
+960,Hospital Vargas de Caracas,VICTORIA CASTILLO,10,,,,
+961,Hospital Vargas de Caracas,YENDERLI CABARCA,13,,,,
+962,Hospital Vargas de Caracas,LÍDICE VELÁSQUEZ,12,,,,
+963,Hospital Vargas de Caracas,CAMILO MORENO,1 año,,,,
+964,Hospital Vargas de Caracas,SANTIAGO JIMÉNEZ,12,,,,
+965,Hospital Vargas de Caracas,DIEGO DÍAZ,9 meses,,,,
+966,Hospital Vargas de Caracas,ZOE HIGUERA,2 meses,,,,
+967,Hospital Vargas de Caracas,ALEXA GONCALVEZ,5 meses,,,,
+968,Hospital Vargas de Caracas,YEIDER ESPINOZA,2 meses,,,,
+969,Hospital Vargas de Caracas,AXEL JIMY,4,,,,
+970,Hospital Vargas de Caracas,EITHAN GUTIÉRREZ,3 meses,,,,
+971,Hospital Vargas de Caracas,BRAYAN GARCÍA,8,,,,
+972,Hospital Vargas de Caracas,VALERIA ARVELO,6,,,,
+973,Hospital Vargas de Caracas,VALERI GONZÁLEZ,10,,,,
+974,Hospital Vargas de Caracas,FRANDER RADA,3,,,,
+975,Hospital Vargas de Caracas,ROSMARY BLANCO,7,,,,
+976,Hospital Vargas de Caracas,ANA GILER,4,,,,
+977,Hospital Vargas de Caracas,LEWIS DESMON,10,,,,
+978,Hospital Vargas de Caracas,VALERIA GONZÁLEZ,,31383685,,,
+979,Hospital Vargas de Caracas,MISAIRA PÉREZ,,15550954,,,
+980,Hospital Vargas de Caracas,GERALDIN DE ABREU,,18709145,,,
+981,Hospital Vargas de Caracas,ELITA MARYORIE,,13069223,,,
+982,Hospital Vargas de Caracas,HILARY PEROZA,,29536127,,,
+983,Hospital Vargas de Caracas,AUDIA TERÁN,,11055173,,,
+984,Hospital Vargas de Caracas,YOLISBE GARCÍA,,,,,
+985,Hospital Vargas de Caracas,DAIBERLIN GONZÁLEZ,,30527436,,,
+986,Hospital Vargas de Caracas,EVELIN GUERRA,,17710348,,,
+987,Hospital Vargas de Caracas,ESTEFANI GESU,,31428812,,,
+988,Hospital Vargas de Caracas,MARÍA PIMENTEL,,,,,
+989,Hospital Vargas de Caracas,VERÓNICA URIBE,,22026527,,,
+990,Hospital Vargas de Caracas,JOSÉ BORREGO,,26327360,,,
+991,Hospital Vargas de Caracas,GRISMALY MARRERO,,15164293,,,
+992,Hospital Vargas de Caracas,CRISTOFER GIL,17,32919700,,LA GUAIRA,
+993,Hospital Vargas de Caracas,CARMEN VARGAS,,22550086,,,
+994,Hospital Vargas de Caracas,KATIUSKA PÉREZ,,18817136,,,
+995,Hospital Vargas de Caracas,DARWIN COLMENARES,,25867267,,,
+996,Hospital Vargas de Caracas,CÉSAR MÁRQUEZ,,16312925,,,
+997,Hospital Vargas de Caracas,CARMEN VELÁSQUEZ,,,,,
+998,Hospital Vargas de Caracas,NAZARETH LÓPEZ,,,,,
+999,Hospital Vargas de Caracas,KIARA ANTONIA RODRÍGUEZ,,,,,
+1000,Hospital Vargas de Caracas,VALERIA PERDOMO,,,,,
+1001,Hospital Vargas de Caracas,ALBANY GARCÍA,17,,,,
+1002,Hospital Vargas de Caracas,ENRIQUE PÉREZ,,,,,
+1003,Hospital Vargas de Caracas,YANEL CORONEL,,,,,
+1004,Hospital Vargas de Caracas,GUSTAVO ANÍBAL RICO,,,,,
+1005,Hospital Vargas de Caracas,MARÍA ANGÉLICA BÁEZ,,31178460,,,
+1006,Hospital Vargas de Caracas,DANIEL LÓPEZ,,,,,
+1007,Hospital Vargas de Caracas,EMERSON LÓPEZ,,,,,
+1008,Hospital Vargas de Caracas,ANDREA GARCÍA,,,,,
+1009,Hospital Vargas de Caracas,MARÍA VIELMA,,,,,
+1010,Hospital Vargas de Caracas,LISBETH DELGADO,,,,,
+1011,Hospital Vargas de Caracas,YARITZA GÓMEZ,,,,,
+1012,Hospital Vargas de Caracas,VANESA GONZÁLEZ,,,,,
+1013,Hospital Vargas de Caracas,EVANGELINA GONZÁLEZ,,,,,
+1014,Hospital Vargas de Caracas,EDGARY GONZÁLEZ,,,,,
+1015,Hospital Vargas de Caracas,AMÉRICA LEAL,,,,,
+1016,Hospital Vargas de Caracas,JOSEF HASSAN,,,,,
+1017,Hospital Vargas de Caracas,MAURA GONZÁLEZ,,,,,
+1018,Hospital Vargas de Caracas,PATRICIA GIL,,,,,
+1019,Hospital Vargas de Caracas,RAINA MEDINA,,,,,
+1020,Hospital Vargas de Caracas,YOANNY AGUILAR,,,,,
+1021,Hospital Vargas de Caracas,NAILETH MORENO,,,,,
+1022,Hospital Vargas de Caracas,CLAUDIA VERDE,,,,,
+1023,Hospital Vargas de Caracas,JUAN CARLOS POSO,,,,,
+1024,Hospital Vargas de Caracas,MARTA ELENA SANTANA,,,,,
+1025,Hospital Vargas de Caracas,MARÍA OLIVARES,,,,,
+1026,Hospital Vargas de Caracas,YOSEF ALÍ,,,,,
+1027,Hospital Vargas de Caracas,NEJIDE MONTOYA,,,,,
+1028,Hospital Vargas de Caracas,WINSTON GONZÁLEZ,,,,,
+1029,Hospital Vargas de Caracas,DANKER PINTORI,,,,,
+1030,Hospital Vargas de Caracas,JOSÉ VILLEGAS,,,,LA GUAIRA ALTA,
+1031,Hospital Vargas de Caracas,MARISEL ARCILA,,,,,
+1032,Hospital Vargas de Caracas,NÉSTOR MORA,,,,,
+1033,Hospital Vargas de Caracas,DAYS MACHADO,,,,,
+1034,Hospital Vargas de Caracas,ALEXANDER CASTILLO,,,,,
+1035,Hospital Vargas de Caracas,ISAAC ALVAREZ,,,,,
+1036,Hospital Vargas de Caracas,HUGO NAVEZ,,,,,
+1037,Hospital Vargas de Caracas,BRANYER SÁNCHEZ,,,,,
+1038,Hospital Vargas de Caracas,FRANCELIS BASTIDAS,,,,,
+1039,Hospital Vargas de Caracas,ANTONI BÁEZ,,,,,
+1040,Hospital Vargas de Caracas,DIGNA ROJAS,,,,,
+1041,Hospital Vargas de Caracas,SORAYA MOLINA,,,,,
+1042,Hospital Vargas de Caracas,CARMEN CRUZ,,,,,
+1043,Hospital Vargas de Caracas,AMÉRICA ESPAÑA,,,,,
+1044,Hospital Vargas de Caracas,YANNET MATA,,,,,
+1045,Hospital Vargas de Caracas,ROBERTO LINARES,,,,,
+1046,Hospital Vargas de Caracas,FREDDY PEREIRA,,,,,
+1047,Hospital Vargas de Caracas,WILMER SOLÓRZANO,,,,,
+1048,Hospital Vargas de Caracas,JOHAN CORDERO,,,,,
+1049,Hospital Vargas de Caracas,JOHAN ALVAREZ,,,,,
+1050,Hospital Vargas de Caracas,ROSENDO CÁRDENAS,,,,,
+1051,Hospital Vargas de Caracas,EDUARDO ORESTE,,,,,
+1052,Hospital Vargas de Caracas,UBALDINA VIVAS,,,,,
+1053,Hospital Vargas de Caracas,BLAMIR GUTIÉRREZ,,,,,
+1054,Hospital Vargas de Caracas,CÁNDIDA VILLANUEVA,,,,,
+1055,Hospital Vargas de Caracas,ANA MÁRQUEZ,,,,,
+1056,Hospital Vargas de Caracas,ADVIEL SUINAGA,,,,,
+1057,Hospital Vargas de Caracas,MARÍA NUÑEZ,,,,,
+1058,Hospital Vargas de Caracas,YDIMAR QUIÑONEZ,,,,,
+1059,Hospital Vargas de Caracas,FREYDIMAR POLANCO,,,,,
+1060,Hospital Vargas de Caracas,ZAIDA SERRANO,,,,,
+1061,Hospital Vargas de Caracas,CRUZ MORENO,,,,,
+1062,Hospital Vargas de Caracas,ESMERALDA DUQUE,,,,,
+1063,Hospital Vargas de Caracas,CAROLINA PÉREZ,,,,,
+1064,Hospital Vargas de Caracas,FELICIA RODRÍGUEZ,,,,,
+1065,Hospital Vargas de Caracas,DILIA PEÑA,,,,,
+1066,Hospital Vargas de Caracas,MAIBEL MUÑOZ,,,,,
+1067,Hospital Vargas de Caracas,GILIRIA FUENMAYOR,,,,,
+1068,Hospital Vargas de Caracas,BERTA ALVAREZ,,,,,
+1069,Hospital Vargas de Caracas,NELLY OLIVAR,,,,,
+1070,Hospital Vargas de Caracas,AURA SIERRA,,,,,
+1071,Hospital Vargas de Caracas,SEYCHELLE MENDOZA,,,,,
+1072,Hospital Vargas de Caracas,GRACIELA VILLEGAS,,,,,
+1073,Hospital Vargas de Caracas,LEIDY DÍAZ,,,,,
+1074,Hospital Vargas de Caracas,BLANCA ACEVEDO,,,,,
+1075,Hospital Vargas de Caracas,IRIS QUINTERO,,,,,
+1076,Hospital Vargas de Caracas,CRISTINA ARECHUA,,,,,
+1077,Hospital Vargas de Caracas,SOLIS PAIVA,,,,,
+1078,Hospital Vargas de Caracas,GLADYS VOLCÁN,,,,,
+1079,Hospital Vargas de Caracas,MIRIAM ARREAZA,,,,,
+1080,Hospital Vargas de Caracas,MARÍA DÍAZ,,,,,
+1081,Hospital Vargas de Caracas,ALEJANDRO COS,,,,,
+1082,Hospital Vargas de Caracas,ALBERT YANCE,,,,,
+1083,Hospital Vargas de Caracas,GILDEMARO BERMÚDEZ,,,,,
+1084,Hospital Vargas de Caracas,RAMÓN MARTÍNEZ,,,,,
+1085,Hospital Vargas de Caracas,JHOSUA DÍAZ,,,,,
+1086,Hospital Vargas de Caracas,FRANKLIN LAREZ,,,,,
+1087,Hospital Vargas de Caracas,LUIS MÉNDEZ,,,,,
+1088,Hospital Vargas de Caracas,RONALD PARRA,,,,,
+1089,Hospital Vargas de Caracas,JOSÉ VELÁSQUEZ,,,,,
+1090,Hospital Vargas de Caracas,HILDO UZCÁTEGUI,,,,,
+1091,Hospital Vargas de Caracas,FERNANDO GARCÍA,,,,,
+1092,Hospital Vargas de Caracas,GABRIEL PEINADO,,,,,
+1093,Hospital Vargas de Caracas,JUAN MICHELL,,,,,
+1094,Hospital Vargas de Caracas,INOCENCIO ALVARADO,,,,,
+1095,Hospital Vargas de Caracas,ÁNGEL CARVAJAL,,,,,
+1096,Hospital Vargas de Caracas,SIXTO GUTIÉRREZ,,,,,
+1097,Hospital Vargas de Caracas,LONNYS SÁNCHEZ,,,,,
+1098,Hospital Vargas de Caracas,GIOVANNI MAYS,,,,,
+1099,Hospital Vargas de Caracas,JOSÉ MUJICA,,,,,
+1100,Hospital Vargas de Caracas,ALICIA MESA,,,,,
+1101,Hospital Vargas de Caracas,CETIBISAY RIVERO,,,,,
+1102,Hospital Vargas de Caracas,YOVANY GARCÍA,,,,,
+1103,Hospital Vargas de Caracas,HERASMO FERNÁNDEZ,,,,,
+1104,Hospital Vargas de Caracas,AIDA ROJAS,,,,,
+1105,Hospital Vargas de Caracas,JOSÉ LUIS BORREGO,30,,,LA GUAIRA,
+1106,Hospital Vargas de Caracas,RAFAEL TOVAR,,581562,,,
+1107,Hospital Vargas de Caracas,MARYORI FIGUEROA,,15544121,,LA GUAIRA,
+1108,Hospital Vargas de Caracas,YALEXIS CORDERO,,,,,
+1109,Hospital Vargas de Caracas,RODERICK ALOUZO,,,,,
+1110,Hospital Vargas de Caracas,JORGE UGUETO,,,,,
+1111,Hospital Vargas de Caracas,RONNY GUINAND,,,,,
+1112,Hospital Vargas de Caracas,KEILA MARTÍNEZ,,,,,
+1113,Hospital Vargas de Caracas,JHOENNI AGUILAR,,,,,
+1114,Hospital Vargas de Caracas,MARÍA CAROLINA OLIVARES,,,,,
+1115,Hospital Vargas de Caracas,RICARDO MAQUIABELO,,,,,
+1116,Hospital Vargas de Caracas,MÓNICA VIELMA,,,,,
+1117,Hospital Vargas de Caracas,DAYINBETH UZCÁTEGUI,,,,,
+1118,Hospital Vargas de Caracas,GERMANY OLIVO,,,,,
+1119,Hospital Vargas de Caracas,JOSÉ OCHOA,,16693964,,CARACAS / CACIQUE TIUNA,Terremoto
+1120,Hospital Vargas de Caracas,JHONNY ORTUÑO,,10660285,,CARACAS - COCHE,Terremoto
+1121,Hospital Vargas de Caracas,MARIELBIS MONASTERIO,,,,,
+1122,Hospital Vargas de Caracas,YONDRI PIÑERO,29,,,,
+1123,Hospital Vargas de Caracas,FREDERICK TORO,,27319576,,,
+1124,Hospital Vargas de Caracas,ALEXANDER RODRÍGUEZ,75,31767515,,,
+1125,Hospital Vargas de Caracas,ANA PLANQUERA,,,,,
+1126,Hospital Vargas de Caracas,JERMANY OLIVO,,12460700,,,
+1127,Hospital Vargas de Caracas,YETI MELIÁN,,14314725,,,
+1128,Hospital Vargas de Caracas,ANTONELA FIGUEROA,,,LA GUAIRA,,
+1129,Hospital Vargas de Caracas,KIARA CASIOLA,,,LA GUAIRA,,
+1130,Hospital Vargas de Caracas,DIOSNAIKER SUAREZ,,,,,
+1131,Hospital Vargas de Caracas,LEONARDO SINIETERZ,,,,,
+1132,Hospital Vargas de Caracas,JOSUA JOERO,,,,,
+1133,Hospital Vargas de Caracas,GABRIEL FERNANDEZ,,,,,
+1134,Hospital Vargas de Caracas,KLEIVER CARREÑO,,,,,
+1135,Hospital Vargas de Caracas,CRISTIN CAMPOS,,,,,

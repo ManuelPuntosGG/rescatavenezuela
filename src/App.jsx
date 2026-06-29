@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Papa from 'papaparse'; // Importante: instalado vía npm
+import Papa from 'papaparse'; 
 import { supabase } from './supabaseClient';
 import MapaEmergencia from './components/MapaEmergencia';
 import FormularioRescate from './components/FormularioRescate';
 import FormularioAcopio from './components/FormularioAcopio';
 import BuscadorDireccion from './components/BuscadorDireccion';
 
-// Optimizando rendimiento
 const normalizarTexto = (str) => {
   if (!str) return "";
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -20,47 +19,43 @@ export default function App() {
   const [gpsUsuario, setGpsUsuario] = useState(null);
   const [soloCriticos, setSoloCriticos] = useState(false); 
 
-  // ESTADO DINÁMICO PARA PACIENTES (ahora vacío al inicio)
+  // ESTADO DINÁMICO PARA PACIENTES (CSV)
   const [pacientes, setPacientes] = useState([]); 
   const [busquedaPaciente, setBusquedaPaciente] = useState('');
   const [filtroHospital, setFiltroHospital] = useState('');
 
   const [rescateExpandido, setRescateExpandido] = useState(null);
   const [acopioExpandido, setAcopioExpandido] = useState(null);
-  const [seccionActiva, setSeccionActiva] = useState('mapa'); 
+  
+  // CAMBIO CLAVE: Iniciamos en la vista centralizada de bienvenida 'inicio'
+  const [seccionActiva, setSeccionActiva] = useState('inicio'); 
 
   // CARGA DE CSV
   useEffect(() => {
-    // Asegúrate de que el archivo esté en la carpeta /public
     fetch('/pacientes.csv')
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: (results) => {
-          // 1. IMPRESIÓN DE DEPURACIÓN (Míralo en la consola de tu navegador: F12)
-          console.log("Primera fila detectada:", results.data[0]); 
-          console.log("Keys detectadas:", Object.keys(results.data[0]));
-
-          // 2. Mapeo más robusto
-          const datosFormateados = results.data.map((item, index) => {
-            // Buscamos las llaves. Si tu csv tiene espacios, los limpiamos:
-            return {
-              id: item['N°'] || item['\ufeffN°'] || index, 
-              nombre: item['Apellidos y Nombres'] || "Sin Nombre",
-              hospital: item['Hospital'] || "Sin Hospital",
-              edad: item['Edad'] || "—",
-              cedula: item['Cédula / ID'] || "—"
-            };
-          });
-          setPacientes(datosFormateados);
-        }
-      });
+      .then(response => response.text())
+      .then(csvText => {
+        Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            const datosFormateados = results.data.map((item, index) => {
+              return {
+                id: item['N°'] || item['\ufeffN°'] || index, 
+                nombre: item['Apellidos y Nombres'] || "Sin Nombre",
+                hospital: item['Hospital'] || "Sin Hospital",
+                edad: item['Edad'] || "—",
+                cedula: item['Cédula / ID'] || item['Cedula'] || "—"
+              };
+            });
+            setPacientes(datosFormateados);
+          }
+        });
       })
-      
       .catch(err => console.error("Error cargando CSV:", err));
   }, []);
+
+  const hospitalesDisponibles = [...new Set(pacientes.map(p => p.hospital).filter(Boolean))].sort();
 
   const gpsUsuarioRef = useRef(gpsUsuario);
   useEffect(() => {
@@ -131,7 +126,8 @@ export default function App() {
   const rescatesFiltrados = soloCriticos ? rescates.filter(item => item.sospecha_supervivientes) : rescates;
 
   const pacientesFiltrados = pacientes.filter(p => {
-    const coincideBusqueda = normalizarTexto(p.nombre).includes(normalizarTexto(busquedaPaciente));
+    const coincideBusqueda = normalizarTexto(p.nombre).includes(normalizarTexto(busquedaPaciente)) || 
+                             normalizarTexto(p.cedula).includes(normalizarTexto(busquedaPaciente));
     const coincideHospital = filtroHospital === '' || p.hospital === filtroHospital;
     return coincideBusqueda && coincideHospital;
   });
@@ -141,10 +137,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans antialiased text-slate-900">
       
-      {/* Header Principal */}
+      {/* HEADER PRINCIPAL */}
       <header className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-4 shadow-md border-b border-slate-800 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <div>
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="cursor-pointer select-none" onClick={() => setSeccionActiva('inicio')}>
             <div className="flex items-center gap-2">
               <span className="flex h-2.5 w-2.5 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -155,22 +151,18 @@ export default function App() {
             <p className="text-xs text-slate-400 mt-0.5">Monitoreo Civil de Contingencias e Insumos Logísticos</p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <button 
-              onClick={() => setFormActivo('rescate')}
-              className="text-xs font-black bg-red-600 hover:bg-red-700 text-white py-2 px-3.5 rounded-lg shadow transition-all flex items-center gap-1.5"
-            >
-              🚨 Reportar Rescate
-            </button>
-            <button 
-              onClick={() => setFormActivo('acopio')}
-              className="text-xs font-black bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3.5 rounded-lg shadow transition-all flex items-center gap-1.5"
-            >
-              📦 Registrar Acopio
-            </button>
+          <div className="flex items-center gap-2">
+            {seccionActiva !== 'inicio' && (
+              <button 
+                onClick={() => setSeccionActiva('inicio')}
+                className="text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3.5 rounded-lg border border-slate-700 transition-all"
+              >
+                🏠 Volver al Inicio
+              </button>
+            )}
             <button 
               onClick={geolocalizarUsuario} 
-              className={`text-xs font-bold py-2 px-3.5 rounded-lg shadow transition-all flex items-center gap-1.5 border ${
+              className={`text-xs font-bold py-2 px-3.5 rounded-lg shadow transition-all border ${
                 gpsUsuario 
                   ? "bg-blue-500/10 text-blue-400 border-blue-500/30" 
                   : "bg-blue-600 hover:bg-blue-700 text-white border-transparent"
@@ -182,82 +174,182 @@ export default function App() {
         </div>
       </header>
 
-      {/* SUB-NAVBAR */}
+      {/* SUB-NAVBAR CONTROLADORA */}
       <div className="bg-white border-b border-slate-200 sticky top-[73px] z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-12">
-          <div className="flex gap-1 h-full">
+        <div className="max-w-7xl mx-auto px-4 flex items-center h-12">
+          <div className="flex gap-2 h-full py-1.5">
             <button 
-              onClick={() => setSeccionActiva('mapa')}
-              className={`px-4 h-full text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
-                seccionActiva === 'mapa' ? 'border-indigo-600 text-indigo-600 bg-indigo-50/30' : 'border-transparent text-slate-500 hover:text-slate-800'
+              onClick={() => setSeccionActiva('inicio')}
+              className={`px-3 rounded-lg text-xs font-bold transition-all ${
+                seccionActiva === 'inicio' ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
               }`}
             >
-              🗺️ Mapa de Emergencia
+              Inicio
+            </button>
+            <button 
+              onClick={() => setSeccionActiva('mapa')}
+              className={`px-3 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                seccionActiva === 'mapa' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+              }`}
+            >
+              🗺️ Mapa y Rescates
             </button>
             <button 
               onClick={() => setSeccionActiva('hospitales')}
-              className={`px-4 h-full text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
-                seccionActiva === 'hospitales' ? 'border-indigo-600 text-indigo-600 bg-indigo-50/30' : 'border-transparent text-slate-500 hover:text-slate-800'
+              className={`px-3 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                seccionActiva === 'hospitales' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
               }`}
             >
-              🏥 Reportes de Hospitales 
-              <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full font-bold">Activo</span>
+              🏥 Buscar Hospitalizados
             </button>
           </div>
         </div>
       </div>
 
-      {/* PANEL DE RESUMEN RÁPIDO */}
-      <section className="bg-slate-100/80 border-b border-slate-200/60 py-3 px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
-            <div className="p-2 rounded-lg bg-red-50 text-red-600 font-bold text-lg">🚨</div>
-            <div>
-              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Rescates Activos</p>
-              <p className="text-lg font-black text-slate-800 mt-1">{rescates.length}</p>
-            </div>
+      {/* =========================================================================
+         1. LANDING PRINCIPAL / HUB INTUITIVO (Métricas + Selector de Tareas)
+         ========================================================================= */}
+      {seccionActiva === 'inicio' && (
+        <main className="flex-1 max-w-5xl w-full mx-auto p-4 md:p-8 flex flex-col justify-center gap-8 animate-fadeIn">
+          
+          {/* Mensaje de bienvenida simple */}
+          <div className="text-center max-w-xl mx-auto">
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight">¿Qué información necesitas consultar hoy?</h2>
+            <p className="text-sm text-slate-500 mt-1">
+              Plataforma civil unificada para el monitoreo geográfico de incidentes y localización de personas en centros médicos.
+            </p>
           </div>
-          <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
-            <div className="p-2 rounded-lg bg-orange-50 text-orange-600 font-bold text-lg">⚠️</div>
-            <div>
-              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Casos Críticos</p>
-              <p className="text-lg font-black text-orange-600 mt-1">{totalCriticos}</p>
-            </div>
-          </div>
-          <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
-            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600 font-bold text-lg">📦</div>
-            <div>
-              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Centros de Acopio</p>
-              <p className="text-lg font-black text-slate-800 mt-1">{acopios.length}</p>
-            </div>
-          </div>
-          <div className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-3 shadow-sm">
-            <div className="p-2 rounded-lg bg-blue-50 text-blue-600 font-bold text-lg">👥</div>
-            <div>
-              <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Censo Hospitalario</p>
-              <p className="text-lg font-black text-slate-800 mt-1">{pacientes.length} Registros</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* VISTAS CONDICIONALES */}
-      {seccionActiva === 'mapa' ? (
-        <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-5">
+          {/* Cuadrícula de Métricas Integradas en el Home */}
+          <section className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <span className="text-xl">🚨</span>
+              <div className="mt-2">
+                <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Rescates Solicitados</p>
+                <p className="text-2xl font-black text-slate-800 mt-1">{rescates.length}</p>
+              </div>
+            </div>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <span className="text-xl">⚠️</span>
+              <div className="mt-2">
+                <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Casos de Extrema Gravedad</p>
+                <p className="text-2xl font-black text-orange-600 mt-1">{totalCriticos}</p>
+              </div>
+            </div>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <span className="text-xl">📦</span>
+              <div className="mt-2">
+                <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Centros de Acopio</p>
+                <p className="text-2xl font-black text-slate-800 mt-1">{acopios.length}</p>
+              </div>
+            </div>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+              <span className="text-xl">👥</span>
+              <div className="mt-2">
+                <p className="text-[10px] uppercase font-black tracking-wider text-slate-400 leading-none">Censo Hospitalario (CSV)</p>
+                <p className="text-2xl font-black text-indigo-600 mt-1">{pacientes.length} Personas</p>
+              </div>
+            </div>
+          </section>
+
+          {/* TARJETAS OPCIONALES DE REDIRECCIÓN (Core de la Experiencia) */}
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Opción A: Mapa de operaciones */}
+            <div 
+              onClick={() => setSeccionActiva('mapa')}
+              className="bg-white rounded-2xl border-2 border-slate-200 hover:border-indigo-500 p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between min-h-[220px]"
+            >
+              <div>
+                <div className="flex justify-between items-start">
+                  <div className="bg-indigo-50 text-indigo-600 p-3 rounded-xl font-bold text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                    🗺️
+                  </div>
+                  <span className="text-[11px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">Tiempo Real</span>
+                </div>
+                <h3 className="text-lg font-black text-slate-900 mt-4 tracking-tight">Ver Mapa de Emergencia e Incidentes</h3>
+                <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                  Ubica geográficamente solicitudes de rescates activos, personas atrapadas o localiza centros logísticos de acopio. 
+                  <strong> También puedes reportar nuevos casos aquí.</strong>
+                </p>
+              </div>
+              <div className="mt-4 flex items-center justify-between text-xs font-bold text-indigo-600 group-hover:text-indigo-700">
+                <span>Abrir mapa operativo →</span>
+              </div>
+            </div>
+
+            {/* Opción B: Buscador de Personas */}
+            <div 
+              onClick={() => setSeccionActiva('hospitales')}
+              className="bg-white rounded-2xl border-2 border-slate-200 hover:border-indigo-500 p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between min-h-[220px]"
+            >
+              <div>
+                <div className="flex justify-between items-start">
+                  <div className="bg-indigo-50 text-indigo-600 p-3 rounded-xl font-bold text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                    🏥
+                  </div>
+                  <span className="text-[11px] bg-slate-100 text-slate-600 font-mono font-bold px-2 py-0.5 rounded-full">Padrón Interno</span>
+                </div>
+                <h3 className="text-lg font-black text-slate-900 mt-4 tracking-tight">Buscar Familiares Hospitalizados</h3>
+                <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                  Consulta rápida del censo civil consolidado. Escribe nombres, apellidos o números de identificación para verificar ingresos validados en centros de salud.
+                </p>
+              </div>
+              <div className="mt-4 flex items-center justify-between text-xs font-bold text-indigo-600 group-hover:text-indigo-700">
+                <span>Ingresar al buscador de personas →</span>
+              </div>
+            </div>
+
+          </section>
+
+          {/* Bloque de accesibilidad rápida para registrar desde el Inicio */}
+          <div className="bg-slate-100 rounded-xl p-4 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+            <div>
+              <p className="text-xs font-bold text-slate-800">¿Deseas dar de alta una alerta de emergencia de forma directa?</p>
+              <p className="text-[11px] text-slate-500">Puedes levantar un reporte inmediato rellenando el formulario correspondiente.</p>
+            </div>
+            <div className="flex gap-2 w-full sm:w-auto justify-center">
+              <button 
+                onClick={() => setFormActivo('rescate')}
+                className="text-[11px] font-black bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg shadow whitespace-nowrap"
+              >
+                🚨 Alerta de Rescate
+              </button>
+              <button 
+                onClick={() => setFormActivo('acopio')}
+                className="text-[11px] font-black bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded-lg shadow whitespace-nowrap"
+              >
+                📦 Dar de Alta Acopio
+              </button>
+            </div>
+          </div>
+        </main>
+      )}
+
+      {/* =========================================================================
+         2. VISTA CONDICIONAL: MAPA OPERATIVO (Con botones integrados)
+         ========================================================================= */}
+      {seccionActiva === 'mapa' && (
+        <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
           
           <div className="lg:col-span-2 flex flex-col gap-3">
+            {/* Buscador e indicaciones rápidas */}
             <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
               <div className="flex-1">
                 <BuscadorDireccion onDireccionEncontrada={(coords) => setCoordenadaSeleccionada(coords)} />
               </div>
-              {coordenadaSeleccionada && (
-                <div className="bg-blue-50 border border-blue-200 text-blue-700 text-[11px] py-2 px-3.5 rounded-lg font-medium shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+              {coordenadaSeleccionada ? (
+                <div className="bg-blue-50 border border-blue-200 text-blue-700 text-[11px] py-2 px-3.5 rounded-lg font-bold shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap">
                   Fijado: {coordenadaSeleccionada.lat.toFixed(4)}, {coordenadaSeleccionada.lng.toFixed(4)}
+                </div>
+              ) : (
+                <div className="bg-slate-200/60 text-slate-600 text-[10px] py-2 px-3 rounded-lg font-medium text-center flex items-center justify-center">
+                  💡 Haz clic en el mapa para marcar coordenadas
                 </div>
               )}
             </div>
 
+            {/* Contenedor del Mapa */}
             <div className="bg-white p-1.5 rounded-xl shadow-sm border border-slate-200 relative h-[450px] lg:h-full flex flex-col overflow-hidden">
               <div className="flex-1 w-full h-full rounded-lg overflow-hidden">
                 <MapaEmergencia 
@@ -270,14 +362,13 @@ export default function App() {
             </div>
           </div>
 
-          <div className="lg:col-span-1 space-y-4 flex flex-col h-[600px] lg:h-auto overflow-hidden">
+          {/* Listas laterales de control */}
+          <div className="lg:col-span-1 space-y-3 flex flex-col h-[600px] lg:h-auto overflow-hidden">
             
             {/* Lista de Rescates */}
             <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
               <div className="border-b border-slate-100 pb-2 mb-2 flex items-center justify-between">
-                <h3 className="text-xs font-black tracking-wider text-slate-400 flex items-center gap-1.5">
-                  🚨 SOLICITUDES DE RESCATE
-                </h3>
+                <h3 className="text-xs font-black tracking-wider text-slate-400">🚨 SOLICITUDES DE RESCATE</h3>
                 <label className="inline-flex items-center cursor-pointer text-[10px] font-semibold text-slate-500">
                   <input 
                     type="checkbox" 
@@ -291,7 +382,7 @@ export default function App() {
 
               <div className="overflow-y-auto space-y-2 flex-1 pr-1 custom-scrollbar">
                 {rescatesFiltrados.length === 0 ? (
-                  <div className="text-center py-8 text-slate-400 text-xs">Sin registros que mostrar.</div>
+                  <div className="text-center py-8 text-slate-400 text-xs">Sin registros.</div>
                 ) : (
                   rescatesFiltrados.map((item) => {
                     const estaExpandido = rescateExpandido === item.id;
@@ -311,8 +402,8 @@ export default function App() {
                             )}
                           </div>
                           {item.distancia !== undefined && (
-                            <span className="bg-slate-200/80 text-slate-700 font-mono font-bold px-1.5 py-0.5 rounded text-[9px] whitespace-nowrap">
-                              📍 a {item.distancia.toFixed(1)} km
+                            <span className="bg-slate-200/80 text-slate-700 font-mono font-bold px-1.5 py-0.5 rounded text-[9px]">
+                              {item.distancia.toFixed(1)} km
                             </span>
                           )}
                         </div>
@@ -320,19 +411,13 @@ export default function App() {
                         {estaExpandido && (
                           <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2">
                             <p className="text-[11px] leading-relaxed"><strong className="text-slate-700">Detalles:</strong> {item.detalles_emergencia}</p>
-                            <div className="flex flex-col gap-0.5 text-[10px]">
-                              <span className="font-semibold text-slate-700">📞 Contacto: {item.contacto_reportante}</span>
-                              {item.sospecha_supervivientes && (
-                                <span className="text-red-600 font-bold">⚠️ Confirmación: Sospecha fuerte de supervivientes bajo escombros.</span>
-                              )}
-                            </div>
+                            <span className="block text-[10px] font-semibold text-slate-700">📞 Contacto: {item.contacto_reportante}</span>
                             <div className="flex justify-end pt-1">
-                              {/* CORREGIDO: Sintaxis de template literal y URL estándar de Google Maps */}
                               <a 
-                                href={`https://www.google.com/maps?q=${item.latitud},${item.longitud}`}
+                                href={`https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1 px-2.5 rounded flex items-center text-[10px]"
+                                className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1 px-2.5 rounded text-[10px]"
                                 onClick={(e) => e.stopPropagation()} 
                               >
                                 🗺️ Trazar Ruta
@@ -347,11 +432,9 @@ export default function App() {
               </div>
             </div>
 
-            {/* Lista de Centros de Acopio */}
+            {/* Centros de acopio */}
             <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
-              <h3 className="text-xs font-black tracking-wider text-slate-400 border-b border-slate-100 pb-2 mb-2">
-                📦 CENTROS DE ACOPIO LOGÍSTICOS
-              </h3>
+              <h3 className="text-xs font-black tracking-wider text-slate-400 border-b border-slate-100 pb-2 mb-2">📦 CENTROS DE ACOPIO</h3>
               <div className="overflow-y-auto space-y-2 flex-1 pr-1 custom-scrollbar">
                 {acopios.length === 0 ? (
                   <div className="text-center py-8 text-slate-400 text-xs">Sin centros activos.</div>
@@ -369,33 +452,25 @@ export default function App() {
                         <div className="flex justify-between items-start gap-2">
                           <span className="font-bold text-slate-800 truncate flex-1">{item.nombre_centro}</span>
                           {item.distancia !== undefined && (
-                            <span className="bg-slate-200/80 text-slate-700 font-mono font-bold px-1.5 py-0.5 rounded text-[9px] whitespace-nowrap">
-                              📍 a {item.distancia.toFixed(1)} km
+                            <span className="bg-slate-200/80 text-slate-700 font-mono font-bold px-1.5 py-0.5 rounded text-[9px]">
+                              {item.distancia.toFixed(1)} km
                             </span>
                           )}
                         </div>
-                        
-                        {!estaExpandido && (
-                          <p className="text-slate-500 text-[10px] truncate mt-0.5">🔍 Clic para ver insumos solicitados y horarios</p>
-                        )}
 
                         {estaExpandido && (
                           <div className="mt-2.5 pt-2.5 border-t border-slate-200/60 text-slate-600 space-y-2">
-                            <p className="text-[11px] leading-relaxed">
-                              <strong className="text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded text-[10px] font-bold mr-1">Solicita:</strong> 
-                              {item.insumos_solicitados}
-                            </p>
-                            <div className="grid grid-cols-2 gap-1 text-[10px] text-slate-500 font-medium">
-                              <span>🕒 Horario: {item.horario || 'No especificado'}</span>
+                            <p className="text-[11px] leading-relaxed"><strong className="text-emerald-700">Solicita:</strong> {item.insumos_solicitados}</p>
+                            <div className="grid grid-cols-2 gap-1 text-[10px] text-slate-500">
+                              <span>🕒 Horario: {item.horario || 'S/E'}</span>
                               <span>📞 Telf: {item.contacto_centro || 'S/C'}</span>
                             </div>
                             <div className="flex justify-end pt-1">
-                              {/* CORREGIDO: Sintaxis de template literal y URL estándar de Google Maps */}
                               <a 
-                                href={`https://www.google.com/maps?q=${item.latitud},${item.longitud}`}
+                                href={`https://www.google.com/maps/search/?api=1&query=${item.latitud},${item.longitud}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1 px-2.5 rounded flex items-center text-[10px]"
+                                className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-1 px-2.5 rounded text-[10px]"
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 🗺️ Cómo llegar
@@ -412,106 +487,112 @@ export default function App() {
 
           </div>
         </main>
-      ) : (
-        /* PANEL DE CONSULTA DE PACIENTES */
+      )}
+
+      {/* =========================================================================
+         3. VISTA CONDICIONAL: DICTAMEN / CENSO HOSPITALARIO (.CSV)
+         ========================================================================= */}
+      {seccionActiva === 'hospitales' && (
         <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col gap-4">
           <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col flex-1">
             
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-slate-100 pb-4 mb-4">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-slate-100 pb-5 mb-4">
               <div>
-                <h3 className="text-sm font-black text-slate-800 tracking-tight uppercase flex items-center gap-2">
-                  🏥 Buscador de Personas en Centros Médicos
+                <h3 className="text-sm font-black text-slate-900 tracking-tight uppercase">
+                  🏥 Directorio Integrado de Personas Admitidas
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Ingrese el nombre o apellido de la persona para verificar si ingresó en los reportes de emergencias.
+                  Filtra de manera precisa por el nombre de la persona en contingencia o su identificación reglamentaria.
                 </p>
               </div>
               
-              <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-2 flex-1 max-w-xl justify-end">
+              <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-2 flex-1 max-w-2xl justify-end">
                 <input 
                   type="text"
-                  placeholder="🔍 Buscar por nombre o apellido..."
+                  placeholder="🔍 Buscar por nombre, apellido o cédula..."
                   value={busquedaPaciente}
                   onChange={(e) => setBusquedaPaciente(e.target.value)}
-                  className="text-xs bg-slate-50/80 border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 flex-1 font-medium"
+                  className="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 flex-1 font-medium text-slate-800"
                 />
                 <select
                   value={filtroHospital}
                   onChange={(e) => setFiltroHospital(e.target.value)}
-                  className="text-xs bg-slate-50/80 border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-bold text-slate-700"
+                  className="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-bold text-slate-700"
                 >
-                  <option value="">🏥 Todos los Hospitales</option>
-                  <option value="Hospital Universitario de Caracas">Hosp. Universitario de Caracas</option>
-                  <option value="Cruz Roja">Cruz Roja</option>
-                  <option value="Periférico de Catia">Periférico de Catia</option>
-                  <option value="Hospital Domingo Luciani">Hosp. Domingo Luciani</option>
-                  <option value="Hospital Pérez Carreño">Hosp. Pérez Carreño</option>
-                  <option value="Hospital Militar Universitario Dr. Carlos Arvelo">Hosp. Militar Universitario Dr. Carlos Arvelo</option>
+                  <option value="">Todos los Hospitales</option>
+                  {hospitalesDisponibles.map((hosp, i) => (
+                    <option key={i} value={hosp}>{hosp}</option>
+                  ))}
                 </select>
               </div>
             </div>
 
             <div className="text-[11px] font-bold text-slate-400 mb-3 uppercase tracking-wider">
               {pacientesFiltrados.length === 1 
-                ? 'Se encontró 1 persona registrada' 
-                : `Se encontraron ${pacientesFiltrados.length} personas registradas`}
+                ? '1 persona listada bajo el parámetro indicado' 
+                : `${pacientesFiltrados.length} Personas encontradas`}
             </div>
 
-            <div className="flex-1 overflow-x-auto border border-slate-100 rounded-xl shadow-inner max-h-[60vh]">
-              <table className="w-full text-left border-collapse text-xs relative">
-                <thead>
-                  <tr className="bg-slate-100/70 text-slate-500 font-black tracking-wider border-b border-slate-200/60 sticky top-0 backdrop-blur-sm z-10">
-                    <th className="p-3 w-16 text-center">N°</th>
-                    <th className="p-3">Apellidos y Nombres</th>
-                    <th className="p-3">Centro Asistencial</th>
-                    <th className="p-3 w-24 text-center">Edad</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 text-slate-700 font-medium">
-                  {pacientesFiltrados.length === 0 ? (
-                    <tr>
-                      <td colSpan="4" className="text-center py-16 text-slate-400 font-bold bg-slate-50/30">
-                        ❌ No se encontraron registros con los criterios ingresados.
-                      </td>
-                    </tr>
-                  ) : (
-                    pacientesFiltrados.map((p, index) => {
-                      const nombreHosp = p.hospital || ""; // Protección anti-errores
-                      return (
-                        <tr key={p.id || index} className="hover:bg-slate-50/80 transition-colors">
-                          <td className="p-3 font-mono text-slate-400 text-center bg-slate-50/20">{index + 1}</td>
-                          <td className="p-3 font-bold text-slate-900 tracking-tight uppercase">{p.nombre || "Sin Nombre"}</td>
-                          <td className="p-3">
-                            <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-black tracking-wide ${
-                              nombreHosp.includes('Universitario') ? 'bg-blue-50 text-blue-700 border border-blue-200/50' :
-                              nombreHosp.includes('Cruz Roja') ? 'bg-red-50 text-red-700 border border-red-200/50' :
-                              nombreHosp.includes('Catia') ? 'bg-orange-50 text-orange-700 border border-orange-200/50' :
-                              nombreHosp.includes('Luciani') ? 'bg-purple-50 text-purple-700 border border-purple-200/50' : 
-                              'bg-emerald-50 text-emerald-700 border border-emerald-200/50'
-                            }`}>
-                              {nombreHosp || "No Especificado"}
+            {/* Tabla / Tarjetas responsivas */}
+            <div className="flex-1 overflow-y-auto border border-slate-100 rounded-xl shadow-inner max-h-[58vh]">
+              {pacientesFiltrados.length === 0 ? (
+                <div className="text-center py-16 text-slate-400 text-xs bg-slate-50/50">
+                  ❌ No se hallaron incidencias con los criterios dados.
+                </div>
+              ) : (
+                <>
+                  {/* Vista Escritorio */}
+                  <table className="hidden md:table w-full text-left border-collapse text-xs relative">
+                    <thead>
+                      <tr className="bg-slate-100/80 text-slate-500 font-black tracking-wider border-b border-slate-200/60 sticky top-0 backdrop-blur-sm z-10">
+                        <th className="p-3.5 w-16 text-center">N°</th>
+                        <th className="p-3.5">Apellidos y Nombres</th>
+                        <th className="p-3.5">Cédula / ID</th>
+                        <th className="p-3.5">Centro de Destino</th>
+                        <th className="p-3.5 w-24 text-center">Edad</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 text-slate-700 font-medium">
+                      {pacientesFiltrados.map((p, index) => (
+                        <tr key={p.id || index} className="hover:bg-slate-50/60 transition-colors">
+                          <td className="p-3.5 font-mono text-slate-400 text-center bg-slate-50/20">{index + 1}</td>
+                          <td className="p-3.5 font-bold text-slate-900 uppercase">{p.nombre}</td>
+                          <td className="p-3.5 font-mono text-slate-600">{p.cedula}</td>
+                          <td className="p-3.5">
+                            <span className="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-md font-bold text-[10px]">
+                              {p.hospital}
                             </span>
                           </td>
-                          <td className="p-3 text-center font-mono font-bold text-slate-600 bg-slate-50/10">
-                            {p.edad || '—'}
-                          </td>
+                          <td className="p-3.5 text-center font-mono font-bold text-slate-600">{p.edad}</td>
                         </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
+                      ))}
+                    </tbody>
+                  </table>
 
-            <div className="mt-4 p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl text-[10px] text-indigo-800 flex items-center gap-2 font-medium">
-              <span>ℹ️</span>
-              Este padrón refleja exclusivamente los ingresos oficiales reportados y validados durante la contingencia civil.
+                  {/* Vista Tarjeta para Celulares */}
+                  <div className="md:hidden grid grid-cols-1 gap-2 p-2 bg-slate-50/50">
+                    {pacientesFiltrados.map((p, index) => (
+                      <div key={p.id || index} className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-1">
+                        <div className="flex justify-between text-[10px] text-slate-400 font-bold">
+                          <span>REGISTRO #{index + 1}</span>
+                          <span>🎂 {p.edad} AÑOS</span>
+                        </div>
+                        <h4 className="text-xs font-black text-slate-900 uppercase">{p.nombre}</h4>
+                        <p className="text-[10px] text-slate-500">Documento: <span className="font-mono text-slate-700 font-bold">{p.cedula}</span></p>
+                        <div className="pt-1.5 text-[10px] text-indigo-700 font-bold">
+                          🏥 {p.hospital}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </main>
       )}
 
-      {/* MODAL EMERGENTE DE FORMULARIOS */}
+      {/* MODAL EMERGENTE GLOBAL DE FORMULARIOS */}
       {formActivo && (
         <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-[100]">
           <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-5 max-w-md w-full max-h-[90vh] overflow-y-auto relative">
@@ -531,7 +612,7 @@ export default function App() {
               </div>
             ) : (
               <div className="bg-amber-50 border border-amber-200 text-amber-900 text-[11px] py-2.5 px-3 rounded-lg text-center font-medium mb-4">
-                ⚠️ No has seleccionado un punto en el mapa. Cierra este cuadro si deseas marcarlo antes de rellenar los datos.
+                ⚠️ No has seleccionado un punto en el mapa. Puedes rellenar el formulario ahora o cerrar para marcarlo en el mapa primero.
               </div>
             )}
             <div className="mt-2">
